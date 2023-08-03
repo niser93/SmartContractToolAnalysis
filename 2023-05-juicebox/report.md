@@ -4,11 +4,11 @@
 
 ## Medium
 
-| C4 Severity | REF  | Name                                                                                                                              | Wardens |        contract        |
-|:-----------:|:----:|:----------------------------------------------------------------------------------------------------------------------------------|:-------:|:----------------------:|
-|   Medium    | M-01 | Delegate architecture forces users to set zero slippage                                                                           |    7    | JBXBuybackDelegate.sol |
-|   Medium    | M-02 | Low Liquidity in Uniswap V3 Pool Can Lead to ETH Lockup in ```JBXBuybackDelegate``` Contract                                      |   12    | JBXBuybackDelegate.sol |
-|   Medium    | M-03 | Funding cycles that use ```JBXBuybackDelegate``` as a redeem data source (or any derived class) will slash all redeemable tokens  |    3    | JBXBuybackDelegate.sol |
+| Category                              | REF  | Name                                                                                                                              | Wardens |        contract        |
+|:--------------------------------------|:----:|:----------------------------------------------------------------------------------------------------------------------------------|:-------:|:----------------------:|
+| Contract Implementation Specific Bugs | M-01 | Delegate architecture forces users to set zero slippage                                                                           |    7    | JBXBuybackDelegate.sol |
+| Freezing Ether                        | M-02 | Low Liquidity in Uniswap V3 Pool Can Lead to ETH Lockup in ```JBXBuybackDelegate``` Contract                                      |   12    | JBXBuybackDelegate.sol |
+| Erroneus Account                      | M-03 | Funding cycles that use ```JBXBuybackDelegate``` as a redeem data source (or any derived class) will slash all redeemable tokens  |    3    | JBXBuybackDelegate.sol |
 
 # MYTHRIL REPORT
 |                        | analysis duration (s) | analysis duration (m) | timeout (Y/N) | High | Medium | Low | valid finds |

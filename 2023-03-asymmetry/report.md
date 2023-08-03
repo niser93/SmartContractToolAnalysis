@@ -4,34 +4,34 @@
 
 ## High
 
-| C4 Severity | REF  | Name                                                                                                                               | Wardens |       contract       |
-|:-----------:|:----:|:-----------------------------------------------------------------------------------------------------------------------------------|:-------:|:--------------------:|
-|    High     | H-01 | An attacker can manipulate the preDepositvePrice to steal from other users                                                         |   41    |      SafEth.sol      |
-|    High     | H-02 | A temporary issue shows in the staking functionality which leads to the users receiving less minted tokens                         |   17    | SafEth.sol, Reth.sol |
-|    High     | H-03 | Users can fail to unstake and lose their deserved ETH because malfunctioning or untrusted derivative cannot be removed             |   20    |      SafEth.sol      |
-|    High     | H-04 | Price of sfrxEth derivative is calculated incorrectly                                                                              |   11    |      SafEth.sol      |
-|    High     | H-05 | Reth ```poolPrice``` calculation may overflow                                                                                      |    6    |       Reth.sol       |
-|    High     | H-06 | ```WstEth``` derivative assumes a ```~1=1``` peg of stETH to ETH                                                                   |   39    |      WstEth.sol      |
-|    High     | H-07 | ```Reth.sol```: Withdrawals are unreliable and depend on excess ```RocketDepositPool``` balance which can brick the whole protocol |   12    |       Reth.sol       |
-|    High     | H-08 | Staking, unstaking and rebalanceToWeight can be sandwiched (Mainly rETH deposit)                                                   |   74    |     SafEth.sol       |
+| Category                              | REF  | Name                                                                                                                               | Wardens |       contract       |
+|:--------------------------------------|:----:|:-----------------------------------------------------------------------------------------------------------------------------------|:-------:|:--------------------:|
+| Precision Loss                        | H-01 | An attacker can manipulate the preDepositvePrice to steal from other users                                                         |   41    |      SafEth.sol      |
+| Erroneus Account                      | H-02 | A temporary issue shows in the staking functionality which leads to the users receiving less minted tokens                         |   17    | SafEth.sol, Reth.sol |
+| Inconsistent State Updates            | H-03 | Users can fail to unstake and lose their deserved ETH because malfunctioning or untrusted derivative cannot be removed             |   20    |      SafEth.sol      |
+| Erroneus Account                      | H-04 | Price of sfrxEth derivative is calculated incorrectly                                                                              |   11    |      SafEth.sol      |
+| Integer Bug (Integer Overflow)        | H-05 | Reth ```poolPrice``` calculation may overflow                                                                                      |    6    |       Reth.sol       |
+| Contract Implementation Specific Bugs | H-06 | ```WstEth``` derivative assumes a ```~1=1``` peg of stETH to ETH                                                                   |   39    |      WstEth.sol      |
+| Contract Implementation Specific Bugs | H-07 | ```Reth.sol```: Withdrawals are unreliable and depend on excess ```RocketDepositPool``` balance which can brick the whole protocol |   12    |       Reth.sol       |
+| Atomicity Violations                  | H-08 | Staking, unstaking and rebalanceToWeight can be sandwiched (Mainly rETH deposit)                                                   |   74    |     SafEth.sol       |
 
 
 ## Medium
 
-| C4 Severity | REF  | Name                                                                                                                                | Wardens |                   contract                    |
-|:-----------:|:----:|:------------------------------------------------------------------------------------------------------------------------------------|:-------:|:---------------------------------------------:|
-|  Medium     | M-01 | Division before multiplication truncate ```minOut``` and incurs heavy precision loss and result in insufficient slippage protection |   14    |             Reth.sol, SfrxEth.sol             |
-|  Medium     | M-02 | sFrxEth may revert on redeeming non-zero amount                                                                                     |    1    |            SafEth.sol, SfrxEth.sol            |
-|  Medium     | M-03 | Potential ```stake()``` DoS if sole safETH holder (ie: first depositor) unstakes ```totalSupply``` - 1                              |    2    |                  SafEth.sol                   |
-|  Medium     | M-04 | Lack of deadline for uniswap AMM                                                                                                    |   14    |                   Reth.sol                    |
-|  Medium     | M-05 | Missing derivative limit and deposit availability checks will revert the whole stake() function                                     |   18    |       Reth.sol, SafEth.sol, WstEth.sol        |
-|  Medium     | M-06 | DoS due to external call failure                                                                                                    |   25    | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol |
-|  Medium     | M-07 | In de-peg scenario, forcing full exit from every derivative & immediately re-entering can cause big losses for depositors           |    8    |                  SafEth.sol                   |
-|  Medium     | M-08 | Possible DoS on ```unstake()```                                                                                                     |    3    |                   Reth.sol                    |
-|  Medium     | M-09 | Non-ideal rETH/WETH pool used pays unnecessary fees                                                                                 |    4    |                   Reth.sol                    |
-|  Medium     | M-10 | Stuck ether when use function ```stake``` with empty ```derivatives```(```derivativeCount``` = 0)                                   |   22    |                  SafEth.sol                   |
-|  Medium     | M-11 | Residual ETH unreachable and unutilized in SafEth.sol                                                                               |   19    |                  SafEth.sol                   |
-|  Medium     | M-12 | No slippage protection on ```stake()``` in SafEth.sol                                                                               |   14    |                  SafEth.sol                   |
+| Category                                                       | REF  | Name                                                                                                                                | Wardens |                   contract                    |
+|:---------------------------------------------------------------|:----:|:------------------------------------------------------------------------------------------------------------------------------------|:-------:|:---------------------------------------------:|
+| Precision Loss                                                 | M-01 | Division before multiplication truncate ```minOut``` and incurs heavy precision loss and result in insufficient slippage protection |   14    |             Reth.sol, SfrxEth.sol             |
+| Erroneus Accoun                                                | M-02 | sFrxEth may revert on redeeming non-zero amount                                                                                     |    1    |            SafEth.sol, SfrxEth.sol            |
+| Erroneus Accoun                                                | M-03 | Potential ```stake()``` DoS if sole safETH holder (ie: first depositor) unstakes ```totalSupply``` - 1                              |    2    |                  SafEth.sol                   |
+| Contract Implementation Specific Bugs                          | M-04 | Lack of deadline for uniswap AMM                                                                                                    |   14    |                   Reth.sol                    |
+| Contract Implementation Specific Bugs (using of Lido Protocol) | M-05 | Missing derivative limit and deposit availability checks will revert the whole stake() function                                     |   18    |       Reth.sol, SafEth.sol, WstEth.sol        |
+| Contract Implementation Specific Bugs                          | M-06 | DoS due to external call failure                                                                                                    |   25    | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol |
+| Contract Implementation Specific Bugs                          | M-07 | In de-peg scenario, forcing full exit from every derivative & immediately re-entering can cause big losses for depositors           |    8    |                  SafEth.sol                   |
+| Contract Implementation Specific Bugs                          | M-08 | Possible DoS on ```unstake()```                                                                                                     |    3    |                   Reth.sol                    |
+| Contract Implementation Specific Bugs                          | M-09 | Non-ideal rETH/WETH pool used pays unnecessary fees                                                                                 |    4    |                   Reth.sol                    |
+| Erroneus Accoun                                                | M-10 | Stuck ether when use function ```stake``` with empty ```derivatives```(```derivativeCount``` = 0)                                   |   22    |                  SafEth.sol                   |
+| Freezing Ether                                                 | M-11 | Residual ETH unreachable and unutilized in SafEth.sol                                                                               |   19    |                  SafEth.sol                   |
+| Contract Implementation Specific Bugs                          | M-12 | No slippage protection on ```stake()``` in SafEth.sol                                                                               |   14    |                  SafEth.sol                   |
 
 # MYTHRIL REPORT
 
@@ -85,6 +85,10 @@ Vulnerability found: Y means
 
 ## COMPARISON BETWEEN MYTHRIL REPORT AND BOT REPORT
 No high or medium in bot report
+
+
+
+
 
 
 

@@ -4,18 +4,18 @@
 
 ### HIGH
 
-| C4 Severity | REF  | Name                                                                                                          | Wardens |        contract         |
-|:-----------:|:----:|:--------------------------------------------------------------------------------------------------------------|:-------:|:-----------------------:|
-|    High     | H-01 | In LlamaRelativeQuorum, the governance result might be incorrect as it counts the  wrong approval/disapproval |    5    | LlamaRelativeQuorum.sol |
-|    High     | H-02 | Anyone can change approval/disapproval threshold for any action using LlamaRelativeQuorum strategy            |    3    | LlamaRelativeQuorum.sol |
+| Category                      | REF  | Name                                                                                                          | Wardens |        contract         |
+|:------------------------------|:----:|:--------------------------------------------------------------------------------------------------------------|:-------:|:-----------------------:|
+| Erroneus Account              | H-01 | In LlamaRelativeQuorum, the governance result might be incorrect as it counts the  wrong approval/disapproval |    5    | LlamaRelativeQuorum.sol |
+| Inconsistent State Updates    | H-02 | Anyone can change approval/disapproval threshold for any action using LlamaRelativeQuorum strategy            |    3    | LlamaRelativeQuorum.sol |
 
 
 ### MEDIUM
-| C4 Severity | REF  | Name                                                                              | Wardens |            contract             |
-|:-----------:|:----:|:----------------------------------------------------------------------------------|:-------:|:-------------------------------:|
-|   Medium    | M-01 | It is not possible to execute actions that require ETH (or other protocol token)  |   18    | LlamaCore.sol,LlamaExecutor.sol |
-|   Medium    | M-02 | User with disapproval role can gas grief the action executor                      |    2    |          LlamaCore.sol          |
-|   Medium    | M-03 | LlamaPolicy could be DOS by creating large amount of actions                      |    7    |  LlamaPolicy.sol,LlamaCore.sol  |
+| Category                                                                | REF  | Name                                                                              | Wardens |            contract             |
+|:------------------------------------------------------------------------|:----:|:----------------------------------------------------------------------------------|:-------:|:-------------------------------:|
+| Contract Implementation Specific Bugs (not payable implementation)      | M-01 | It is not possible to execute actions that require ETH (or other protocol token)  |   18    | LlamaCore.sol,LlamaExecutor.sol |
+| Contract Implementation Specific Bugs (frontrun vulnerability)          | M-02 | User with disapproval role can gas grief the action executor                      |    2    |          LlamaCore.sol          |
+| Contract Implementation Specific Bugs (DOS due to too much user action) | M-03 | LlamaPolicy could be DOS by creating large amount of actions                      |    7    |  LlamaPolicy.sol,LlamaCore.sol  |
 
 
 # MYTHRIL REPORT
