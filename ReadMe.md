@@ -1,3 +1,11 @@
+DLTs are an emerging reality opening the way to new application design paradigms like smart contracts-based distributed applications. 
+If on one side DLTs are creating new markets and opportunities, on the other they are also exposing users to new security issues deriving 
+from the smart contracts usage and in particular from the scarce maturity in terms of security practices in their design and development. 
+This paper raises a warning on the efficacy of a state-of-the-art software testing tool, namely Mythril, by challenging it with real 
+smart contracts extracted from the Code4arena competitions and comparing its performance with security audits released during the contests. 
+The paper highlights possible root causes of inefficiency, opening the way toward a more scalable and efficient smart contract testing tools.
+
+
 # Asymmetry
 **contest**: [2023-03-Asymmetry](https://code4rena.com/contests/2023-03-asymmetry-contest)\
 **Analysis report**: [https://code4rena.com/reports/2023-03-asymmetry](https://code4rena.com/reports/2023-03-asymmetry)\
