@@ -1,65 +1,88 @@
-DLTs are an emerging reality opening the way to new application design paradigms like smart contracts-based distributed applications. 
-If on one side DLTs are creating new markets and opportunities, on the other they are also exposing users to new security issues deriving 
-from the smart contracts usage and in particular from the scarce maturity in terms of security practices in their design and development. 
-This paper raises a warning on the efficacy of a state-of-the-art software testing tool, namely Mythril, by challenging it with real 
-smart contracts extracted from the Code4arena competitions and comparing its performance with security audits released during the contests. 
-The paper highlights possible root causes of inefficiency, opening the way toward a more scalable and efficient smart contract testing tools.
+# On the Efficacy of Smart Contract Analysis Tools
+
+## Abstract
+Distributed Ledger Technologies are an emerging reality opening the way to new application design paradigms like smart contracts-based distributed applications.\
+If on one side they are creating new markets and opportunities, on the other they are exposing users to new security issues deriving
+from the scarce maturity in terms of security practices in their design and development.\
+This paper raises a warning about the efficacy of a state-of-the-art software testing tool, namely Mythril, by challenging it with real smart contracts extracted from the
+Code4arena competitions and comparing its performance with security audits released during the contests. The paper highlights possible root causes of 
+inefficiency, opening the way toward more scalable and efficient smart contract testing tools.
+
+## Authors
+Silvia Bonomi\
+Stefano Cappai\
+Emilio Coppa
+
+
+# Mythril analysis
+## Description
+Mythril is a security analysis tool for EVM bytecode. It detects security vulnerabilities in smart contracts. 
+It uses symbolic execution, SMT solving and taint analysis to detect a variety of security vulnerabilities.
+
+## Experiment description
+We performed several experiments with different input parameters.
+In particular, we set 3 parameters: strategy, max-depth and timeout
+
+|              |    Strategy     | Max Depth | Timeout |
+|:------------:|:---------------:|:---------:|:-------:|
+| experiment 1 |  standard(dfs)  |    22     |  86400  |
+| experiment 2 |       dfs       |    200    |  86400  |
+| experiment 3 |       bfs       |    150    |  86400  |
+| experiment 4 |  naive-random   |    250    |  86400  |
+| experiment 5 | weighted-random |   1000    |  86400  |
+| experiment 6 |     pending     |    500    |  86400  |
 
 
 # Asymmetry
-**contest**: [2023-03-Asymmetry](https://code4rena.com/contests/2023-03-asymmetry-contest)\
+**Contest**: [2023-03-Asymmetry](https://code4rena.com/contests/2023-03-asymmetry-contest)\
 **Analysis report**: [https://code4rena.com/reports/2023-03-asymmetry](https://code4rena.com/reports/2023-03-asymmetry)\
 **Bot report**: [https://gist.github.com/muratkurtulus/c7a89b0ef411b5b96dd8af23ccd95dc4](https://gist.github.com/muratkurtulus/c7a89b0ef411b5b96dd8af23ccd95dc4)\
 **Files in scope**: 4 (including 4 contracts)\
 **SLOC**:460\
 **Our comparison and description**: [2023-03-asymmetry/report.md](2023-03-asymmetry/report.md)
 
-
-* **Analysis report**:\
-High in analysis report: 8\
-Medium in analysis report: 12
-
-
-* **Bot report**:\
-High in bot report: 0\
-Medium in bot report: 0
+|                        | High | Medium | Low |
+|:----------------------:|:----:|:------:|:---:|
+|    Analysis report     |  8   |   12   |     |
+| Bot race winner report |  0   |   0    |     |
 
 
-* **Mythril report**:\
+## Mythril report
 High in Mythril report: 0\
 Medium in Mythril report: 0\
 Low in Mythril report: 3\
 Valid finds in Mythril report: 0
 
 
-* **Comparison Analysis report/mythril finds**:\
-High in analysis report found also by Mythril: 0 (out of 8)\
-Medium in analysis report found also by Mythril: 1 (out of 12)
+## Analysis report VS Mythril report
+|                       | High in analysis report | Medium in analysis report |
+|:---------------------:|:-----------------------:|:-------------------------:|
+| Also found by Mythril |            0            |             1             |
+| Not found by Mythril  |            8            |            11             |
+|        Overall        |            8            |            12             |
 
 
-* **Comparison bot report/mythril finds**:\
-High in bot report found also by Mythril: 0 (out of 0)\
-Medium in bot report found also by Mythril: 0 (out of 0)
+## Bot race winner report VS Mythril report
+|                       | High in Bot race winner report | Medium in Bot race winner report |
+|:---------------------:|:------------------------------:|:--------------------------------:|
+| Also found by Mythril |               0                |                0                 |
+| Not found by Mythril  |               0                |                0                 |
+|        Overall        |               0                |                0                 |
 
 
 
 # Juicebox
-**contest**: [2023-05-Juicebox](https://code4rena.com/contests/2023-05-juicebox-buyback-delegate)\
+**Contest**: [2023-05-Juicebox](https://code4rena.com/contests/2023-05-juicebox-buyback-delegate)\
 **Analysis report**: [https://code4rena.com/reports/2023-05-juicebox](https://code4rena.com/reports/2023-05-juicebox)\
 **Bot report**: [https://gist.github.com/itsmetechjay/2efc963de59bcad62e69de48171d10ca](https://gist.github.com/itsmetechjay/2efc963de59bcad62e69de48171d10ca)\
 **Files in scope**: 1 (including 1 contract)\
 **SLOC**:160\
 **Our comparison and description**: [2023-05-juicebox/report.md](2023-05-juicebox/report.md)
 
-
-* **Analysis report**:\
-High in analysis report: 0\
-Medium in analysis report: 3
-
-
-* **Bot report**:\
-High in bot report: 0\
-Medium in bot report: 3
+|                        | High | Medium | Low |
+|:----------------------:|:----:|:------:|:---:|
+|    Analysis report     |  0   |   3    |     |
+| Bot race winner report |  0   |   3    |     |
 
 
 * **Mythril report**:\
@@ -69,19 +92,25 @@ Low in Mythril report: 0\
 Valid finds in Mythril report: 0
 
 
-* **Comparison Analysis report/mythril finds**:\
-High in analysis report found also by Mythril: 0 (out of 0)\
-Medium in analysis report found also by Mythril: 0 (out of 3)
+## Analysis report VS Mythril report
+|                       | High in analysis report | Medium in analysis report |
+|:---------------------:|:-----------------------:|:-------------------------:|
+| Also found by Mythril |            0            |             0             |
+| Not found by Mythril  |            0            |             3             |
+|        Overall        |            0            |             3             |
 
 
-* **Comparison bot report/mythril finds**:\
-High in bot report found also by Mythril: 0 (out of 0)\
-Medium in bot report found also by Mythril: 0 (out of 3)
+## Bot race winner report VS Mythril report
+|                       | High in Bot race winner report | Medium in Bot race winner report |
+|:---------------------:|:------------------------------:|:--------------------------------:|
+| Also found by Mythril |               0                |                0                 |
+| Not found by Mythril  |               0                |                3                 |
+|        Overall        |               0                |                3                 |
 
 
 
 # Llama
-**contest**: [2023-06-Llama](https://code4rena.com/contests/2023-06-llama)\
+**Contest**: [2023-06-Llama](https://code4rena.com/contests/2023-06-llama)\
 **Analysis report**: [https://code4rena.com/reports/2023-06-llama](https://code4rena.com/reports/2023-06-llama)\
 **Bot report**: [https://gist.github.com/itsmetechjay/610f1b31f419156f06898ee10c89402d](https://gist.github.com/itsmetechjay/610f1b31f419156f06898ee10c89402d)\
 **Files in scope**: 23 (including 11 contracts)\
@@ -89,14 +118,10 @@ Medium in bot report found also by Mythril: 0 (out of 3)
 **Our comparison and description**: [2023-06-llama/report.md](2023-06-llama/report.md)
 
 
-* **Analysis report**:\
-High in analysis report: 2\
-Medium in analysis report: 3
-
-
-* **Bot report**:\
-High in bot report: 0\
-Medium in bot report: 2
+|                        | High | Medium | Low |
+|:----------------------:|:----:|:------:|:---:|
+|    Analysis report     |  2   |   3    |     |
+| Bot race winner report |  0   |   2    |     |
 
 
 * **Mythril report**:\
@@ -106,20 +131,25 @@ Low in Mythril report: 13\
 Valid finds in Mythril report: 0
 
 
-* **Comparison Analysis report/mythril finds**:\
-High in analysis report found also by Mythril: 0\
-Medium in analysis report found also by Mythril: 0
+## Analysis report VS Mythril report
+|                       | High in analysis report | Medium in analysis report |
+|:---------------------:|:-----------------------:|:-------------------------:|
+| Also found by Mythril |            0            |             0             |
+| Not found by Mythril  |            2            |             3             |
+|        Overall        |            2            |             3             |
 
-
-* **Comparison bot report/mythril finds**:\
-High in bot report found also by Mythril: 0\
-Medium in bot report found also by Mythril: 0
+## Bot race winner report VS Mythril report
+|                       | High in Bot race winner report | Medium in Bot race winner report |
+|:---------------------:|:------------------------------:|:--------------------------------:|
+| Also found by Mythril |               0                |                0                 |
+| Not found by Mythril  |               0                |                2                 |
+|        Overall        |               0                |                2                 |
 
 
 
 
 # Stader
-**contest**: [2023-06-Stader](https://code4rena.com/contests/2023-06-stader-labs)\
+**Contest**: [2023-06-Stader](https://code4rena.com/contests/2023-06-stader-labs)\
 **Analysis report**: [https://code4rena.com/reports/2023-06-stader](https://code4rena.com/reports/2023-06-stader)\
 **Bot report**: [https://gist.github.com/CloudEllie/9a06bd326750de18279979886ed93ffd](https://gist.github.com/CloudEllie/9a06bd326750de18279979886ed93ffd)\
 **Files in scope**: 23 (including 23 contracts)\
@@ -127,14 +157,10 @@ Medium in bot report found also by Mythril: 0
 **Our comparison and description**: [2023-06-stader/report.md](2023-06-stader/report.md)
 
 
-* **Analysis report**:\
-High in analysis report: 1\
-Medium in analysis report: 14
-
-
-* **Bot report**:\
-High in bot report: 0\
-Medium in bot report: 1
+|                        | High | Medium | Low |
+|:----------------------:|:----:|:------:|:---:|
+|    Analysis report     |  1   |   14   |     |
+| Bot race winner report |  0   |   1    |     |
 
 
 * **Mythril report**:\
@@ -144,14 +170,19 @@ Low in Mythril report: 25\
 Valid finds in Mythril report: 2
 
 
-* **Comparison Analysis report/mythril finds**:\
-High in analysis report found also by Mythril: 1 (out of 1)\
-Medium in analysis report found also by Mythril: 1 (out of 14)
+## Analysis report VS Mythril report
+|                       | High in analysis report | Medium in analysis report |
+|:---------------------:|:-----------------------:|:-------------------------:|
+| Also found by Mythril |            1            |             1             |
+| Not found by Mythril  |            0            |            13             |
+|        Overall        |            1            |            14             |
 
-
-* **Comparison bot report/mythril finds**:\
-High in bot report found also by Mythril: 0 (out of 0)\
-Medium in bot report found also by Mythril: 0 (out of 1)
+## Bot race winner report VS Mythril report
+|                       | High in Bot race winner report | Medium in Bot race winner report |
+|:---------------------:|:------------------------------:|:--------------------------------:|
+| Also found by Mythril |               0                |                0                 |
+| Not found by Mythril  |               0                |                1                 |
+|        Overall        |               0                |                1                 |
 
 
 
@@ -332,4 +363,45 @@ It is due to import of ```ReentrancyGuardUpgradeable.sol```, a contract from ope
 This module aims to avoid reentrancy. In order to do so, it permit only one call at a time.
 So, vulnerability reported by Mythril can't be exploited, because _status variable avoids reentrancy.
 
+# Analysis of medium bot finds
 
+## JUICEBOX M-01 Fee-on-transfer/rebasing tokens will have problems when swapping
+
+### contract
+JBXBuybackDelegate.sol
+[JBXBuybackDelegate.sol#L258-L289](https://github.com/code-423n4/2023-05-juicebox/blob/9a36e5c8d0588f0f262a0cd1c08e34b2184d8f4d/juice-buyback/contracts/JBXBuybackDelegate.sol#L258-L289)
+
+### Analysis of vulnerability validity
+
+## JUICEBOX M-02 Unsafe use of ```transfer()```/```transferFrom()``` with ```IERC20 ```
+
+### contract
+JBXBuybackDelegate.sol
+
+### Analysis of vulnerability validity
+
+## JUICEBOX M-03 Return values of ```transfer()```/```transferFrom()``` not checked
+
+### contract
+JBXBuybackDelegate.sol
+
+### Analysis of vulnerability validity
+
+## LLAMA M-01 Some tokens may revert when zero value transfers are made
+
+### contract
+LlamaAccount.sol
+
+### Analysis of vulnerability validity
+
+## LLAMA M-02 ```_safeMint()``` should be used rather than _mint() wherever possible
+
+### contract
+LlamaPolicy.sol
+
+### Analysis of vulnerability validity
+
+## STADER M-01 The ```owner``` is a single point of failure and a centralization risk
+
+### contract
+VaultProxy.sol
