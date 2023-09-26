@@ -35,12 +35,80 @@
 
 # MYTHRIL REPORT
 
-|             | analysis duration (s) | analysis duration (m) | timeout (Y/N) | High | Medium | Low | valid finds |
-|:-----------:|:---------------------:|:---------------------:|:-------------:|:----:|:------:|:---:|:-----------:|
-|  Reth.sol   |          109          |           2           |       N       |  0   |   0    |  1  |      0      |
-| SafEth.sol  |         7872          |          131          |       N       |  0   |   0    |  1  |      0      |
-| SfrxEth.sol |          128          |           2           |       N       |  0   |   0    |  1  |      0      |
-| WstEth.sol  |          113          |           2           |       N       |  0   |   0    |  0  |      0      |
+|              |    Strategy     | Max Depth | Timeout |                       Description file                       |
+|:------------:|:---------------:|:---------:|:-------:|:------------------------------------------------------------:|
+| experiment 1 |  standard(dfs)  |    22     |  86400  | [experiment_1/_description.md](experiment_1/_description.md) |
+| experiment 2 |       dfs       |    200    |  86400  | [experiment_2/_description.md](experiment_2/_description.md) |
+| experiment 3 |       bfs       |    150    |  86400  | [experiment_3/_description.md](experiment_3/_description.md) |
+| experiment 4 |  naive-random   |    250    |  86400  | [experiment_4/_description.md](experiment_4/_description.md) |
+| experiment 5 | weighted-random |   1000    |  86400  | [experiment_5/_description.md](experiment_5/_description.md) |
+| experiment 6 |     pending     |    500    |  86400  | [experiment_6/_description.md](experiment_6/_description.md) |
+
+|                           | SLOC | analysis duration (s) | analysis duration (m) | timeout (Y/N) |   High    | Medium | Low | valid finds |
+|:--------------------------|:----:|:---------------------:|:---------------------:|:-------------:|:---------:|:------:|:---:|:-----------:|
+| experiment 1              | 460  |         8222          |          137          |               | 0 (0 IAB) |   0    |  3  |      0      |
+| experiment 2              | 460  |         11401         |          190          |               | 0 (0 IAB) |   0    |  3  |      0      |
+| experiment 3              | 460  |         8285          |          138          |               | 0 (0 IAB) |   0    |  3  |      0      |
+| experiment 4              | 460  |         8850          |          148          |               | 0 (0 IAB) |   0    |  3  |      0      |
+| experiment 5              | 460  |         8857          |          148          |               | 0 (0 IAB) |   0    |  3  |      0      |
+| experiment 6              | 460  |         8364          |          139          |               | 0 (0 IAB) |   0    |  3  |      0      |
+| Unique finds and averages | 460  |         8997          |          150          |               | 0 (0 IAB) |   0    |  3  |      0      |
+
+
+# SLITHER REPORT
+|              | SLOC | analysis duration (s) | High | Medium | Low | valid finds |
+|:------------:|:----:|:---------------------:|:----:|:------:|:---:|:-----------:|
+|  Reth.json   | 169  |         3.03          |  0   |   5    |  1  |     1M      |
+| SafEth.json  | 156  |         5.66          |  2   |   5    | 16  |     3L      |
+| SfrxEth.json |  81  |         2.58          |  0   |   7    |  1  |     1M      |
+| WstEth.json  |  54  |         2.98          |  0   |   6    |  1  |      0      |
+
+## Valid finds
+### Medium
+#### divide-before-multiply 
+(See [[M-01] Division before multiplication truncate minOut and incurs heavy precision loss and result in insufficient slippage protection](https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1078))
+in Reth.sol and SfrxEth.sol
+
+### Low
+#### shadowing-local 
+(See [[20] Variable shadowing](https://github.com/code-423n4/2023-03-asymmetry-findings/issues/967))
+in SafEth.sol
+
+#### reentrancy-events
+(See [[05] Emit events before external calls](https://github.com/code-423n4/2023-03-asymmetry-findings/issues/967))
+in SafEth.sol (3x)
+
+
+# SMARTCHECK REPORT
+|             | SLOC | High | Medium | Low | valid finds |
+|:-----------:|:----:|:----:|:------:|:---:|:-----------:|
+|  Reth.sol   | 169  |  1   |   2    | 36  |    2M 5L    |
+| SafEth.sol  | 156  |  1   |   7    | 41  |    5M 1L    |
+| SfrxEth.sol |  81  |  1   |   2    | 24  |    2M 5L    |
+| WstEth.sol  |  54  |  1   |   2    | 34  |    2M 4L    |
+
+
+## Valid finds
+### Medium
+#### SOLIDITY_DIV_MUL 
+(See [[M-01] Division before multiplication truncate minOut and incurs heavy precision loss and result in insufficient slippage protection](https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1078))
+in Reth.sol and SfrxEth.sol
+
+#### SOLIDITY_OVERPOWERED_ROLE
+This issue was not reported in Warden report neither in bot report.
+Issue is in Reth.sol, SafEth.sol (5x), SfrxEth.sol and WstEth.sol
+
+### Low
+#### SOLIDITY_ADDRESS_HARDCODED
+This issue was not reported in Warden report neither in bot report.
+Issue is in Reth.sol (4x), SfrxEth.sol (4x) and WstEth.sol (3x)
+
+#### SOLIDITY_PRAGMAS_VERSION
+This issue was not reported in Warden report neither in bot report.
+Issue is in Reth.sol, SafEth.sol, SfrxEth.sol and WstEth.sol
+
+### Other finds
+Other finds are valid, but we consider them as not-critical
 
 
 # BOT REPORT

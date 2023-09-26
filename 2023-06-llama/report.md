@@ -19,6 +19,27 @@
 
 
 # MYTHRIL REPORT
+
+|              |    Strategy     | Max Depth | Timeout |                       Description file                       |
+|:------------:|:---------------:|:---------:|:-------:|:------------------------------------------------------------:|
+| experiment 1 |  standard(dfs)  |    22     |  86400  | [experiment_1/_description.md](experiment_1/_description.md) |
+| experiment 2 |       dfs       |    200    |  86400  | [experiment_2/_description.md](experiment_2/_description.md) |
+| experiment 3 |       bfs       |    150    |  86400  | [experiment_3/_description.md](experiment_3/_description.md) |
+| experiment 4 |  naive-random   |    250    |  86400  | [experiment_4/_description.md](experiment_4/_description.md) |
+| experiment 5 | weighted-random |   1000    |  86400  | [experiment_5/_description.md](experiment_5/_description.md) |
+| experiment 6 |     pending     |    500    |  86400  | [experiment_6/_description.md](experiment_6/_description.md) |
+
+|                           | SLOC | analysis duration (s) | analysis duration (m) | timeout (Y/N) |   High    | Medium | Low | valid finds |
+|:--------------------------|:----:|:---------------------:|:---------------------:|:-------------:|:---------:|:------:|:---:|:-----------:|
+| experiment 1              | 160  |         2578          |          43           |               | 0 (0 IAB) |   0    |  0  |      0      |
+| experiment 2              | 160  |         3079          |          51           |               | 0 (0 IAB) |   0    |  0  |      0      |
+| experiment 3              | 160  |         2613          |          44           |               | 0 (0 IAB) |   0    |  0  |      0      |
+| experiment 4              | 160  |         2812          |          47           |               | 0 (0 IAB) |   0    |  0  |      0      |
+| experiment 5              | 160  |         2191          |          37           |               | 0 (0 IAB) |   0    |  0  |      0      |
+| experiment 6              | 160  |         2007          |          33           |               | 0 (0 IAB) |   0    |  0  |      0      |
+| Unique finds and averages | 160  |         2547          |          43           |               | 0 (0 IAB) |   0    |  0  |      0      | 
+
+
 |                                      | analysis duration (s) | analysis duration (m) | timeout (Y/N) |   High    | Medium | Low | valid finds |
 |:------------------------------------:|:---------------------:|:---------------------:|:-------------:|:---------:|:------:|:---:|:-----------:|
 |     LlamaAbsolutePeerReview.sol      |         5320          |          89           |       N       | 6 (6 IAB) |   0    |  4  |      0      |          

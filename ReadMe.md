@@ -163,11 +163,16 @@ Valid finds in Mythril report: 0
 | Bot race winner report |  0   |   1    |     |
 
 
-* **Mythril report**:\
-High in Mythril report: 28 (26 IAB)\
-Medium in Mythril report: 1
-Low in Mythril report: 25\
-Valid finds in Mythril report: 2
+## Mythril analysis
+|                           | SLOC | analysis duration (s) | analysis duration (m) | timeout (Y/N) |    High     | Medium | Low | valid finds |
+|:--------------------------|:----:|:---------------------:|:---------------------:|:-------------:|:-----------:|:------:|:---:|:-----------:|
+| experiment 1              | 4334 |        113834         |         1897          |               | 35 (33 IAB) |   1    | 28  |      2      |
+| experiment 2              | 4334 |        137653         |         2294          |               | 33 (31 IAB) |   1    | 25  |      2      |
+| experiment 3              | 4334 |        175376         |         2923          |               | 44 (42 IAB) |   1    | 27  |      2      |
+| experiment 4              | 4334 |        175646         |         2927          |               | 38 (36 IAB) |   1    | 28  |      2      |
+| experiment 5              | 4334 |        177329         |         2955          |               | 37 (35 IAB) |   1    | 27  |      2      |
+| experiment 6              | 4334 |        174345         |         2906          |               | 38 (36 IAB) |   1    | 27  |      2      |
+| Unique finds and averages | 4334 |        159030         |         2650          |               | 44 (42 IAB) |   1    | 28  |      2      |
 
 
 ## Analysis report VS Mythril report

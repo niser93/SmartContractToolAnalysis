@@ -11,9 +11,59 @@
 | Erroneus Account                      | M-03 | Funding cycles that use ```JBXBuybackDelegate``` as a redeem data source (or any derived class) will slash all redeemable tokens  |    3    | JBXBuybackDelegate.sol |
 
 # MYTHRIL REPORT
-|                        | analysis duration (s) | analysis duration (m) | timeout (Y/N) | High | Medium | Low | valid finds |
-|:----------------------:|:---------------------:|:---------------------:|:-------------:|:----:|:------:|:---:|:-----------:|
-| JBXBuybackDelegate.sol |         2578          |          43           |       N       |  0   |   0    |  0  |      0      |             
+
+|              |    Strategy     | Max Depth | Timeout |                       Description file                       |
+|:------------:|:---------------:|:---------:|:-------:|:------------------------------------------------------------:|
+| experiment 1 |  standard(dfs)  |    22     |  86400  | [experiment_1/_description.md](experiment_1/_description.md) |
+| experiment 2 |       dfs       |    200    |  86400  | [experiment_2/_description.md](experiment_2/_description.md) |
+| experiment 3 |       bfs       |    150    |  86400  | [experiment_3/_description.md](experiment_3/_description.md) |
+| experiment 4 |  naive-random   |    250    |  86400  | [experiment_4/_description.md](experiment_4/_description.md) |
+| experiment 5 | weighted-random |   1000    |  86400  | [experiment_5/_description.md](experiment_5/_description.md) |
+| experiment 6 |     pending     |    500    |  86400  | [experiment_6/_description.md](experiment_6/_description.md) |
+
+|                           | SLOC | analysis duration (s) | analysis duration (m) | timeout (Y/N) |   High    | Medium | Low | valid finds |
+|:--------------------------|:----:|:---------------------:|:---------------------:|:-------------:|:---------:|:------:|:---:|:-----------:|
+| experiment 1              | 160  |         2578          |          43           |               | 0 (0 IAB) |   0    |  0  |      0      |
+| experiment 2              | 160  |         3079          |          51           |               | 0 (0 IAB) |   0    |  0  |      0      |
+| experiment 3              | 160  |         2613          |          44           |               | 0 (0 IAB) |   0    |  0  |      0      |
+| experiment 4              | 160  |         2812          |          47           |               | 0 (0 IAB) |   0    |  0  |      0      |
+| experiment 5              | 160  |         2191          |          37           |               | 0 (0 IAB) |   0    |  0  |      0      |
+| experiment 6              | 160  |         2007          |          33           |               | 0 (0 IAB) |   0    |  0  |      0      |
+| Unique finds and averages | 160  |         2547          |          43           |               | 0 (0 IAB) |   0    |  0  |      0      | 
+
+# SLITHER REPORT
+|                         | SLOC | analysis duration (s) | High | Medium | Low | valid finds |
+|:-----------------------:|:----:|:---------------------:|:----:|:------:|:---:|:-----------:|
+| JBXBuybackDelegate.json | 160  |         11.38         |  3   |   10   |  4  |     1H      |
+
+## Valid finds
+### High
+#### unchecked-transfer
+Reported as medium in [bot report - M03](https://gist.github.com/itsmetechjay/2efc963de59bcad62e69de48171d10ca#m03-return-values-of-transfertransferfrom-not-checked)
+
+
+# SMARTCHECK REPORT
+|                    | SLOC | High | Medium | Low | valid finds |
+|:------------------:|:----:|:----:|:------:|:---:|:-----------:|
+| JBXBuybackDelegate | 160  |  0   |   2    | 391 |    2M 1L    |
+
+
+## Valid finds
+### Medium
+#### SOLIDITY_DIV_MUL 
+(See [Bot report: [L‑02] Loss of precision](https://gist.github.com/itsmetechjay/2efc963de59bcad62e69de48171d10ca#l02-loss-of-precision))
+reported as low in bot report
+in JBXBuybackDelegate.sol (2x)
+
+### Low
+#### SOLIDITY_PRAGMAS_VERSION
+(See [Bot report: [N‑12] Non-library/interface files should use fixed compiler versions, not floating ones](https://gist.github.com/itsmetechjay/2efc963de59bcad62e69de48171d10ca#n12-non-libraryinterface-files-should-use-fixed-compiler-versions-not-floating-ones))
+reported as not critical in bot report
+in JBXBuybackDelegate.sol
+
+### Other finds
+Other finds are valid, but we consider them as not-critical
+
 
 # BOT REPORT
 

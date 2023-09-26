@@ -119,7 +119,7 @@ This vulnerability has been descripted inside [SWC Registry](https://swcregistry
 
 [SWC-112 Delegatecall to Untrusted Callee](https://swcregistry.io/docs/SWC-112/)
 
-Mythril [found it](mythril/VaultProxy.md):
+Mythril [found it](mythril/experiment_1/VaultProxy.md):
 ```
 ## Delegatecall to user-supplied address
 - SWC ID: 112
@@ -267,37 +267,107 @@ Anyway, there is a SWC:
 
 
 # MYTHRIL REPORT
-TIMEOUT is 24h.
 
-High, medium and low are based on severity indicated in Mythril results.
-Inside High, we indicated how much Integer Arithmetic Bugs (IAB) Mythril found.
+|              |    Strategy     | Max Depth | Timeout |                       Description file                       |
+|:------------:|:---------------:|:---------:|:-------:|:------------------------------------------------------------:|
+| experiment 1 |  standard(dfs)  |    22     |  86400  | [experiment_1/_description.md](experiment_1/_description.md) |
+| experiment 2 |       dfs       |    200    |  86400  | [experiment_2/_description.md](experiment_2/_description.md) |
+| experiment 3 |       bfs       |    150    |  86400  | [experiment_3/_description.md](experiment_3/_description.md) |
+| experiment 4 |  naive-random   |    250    |  86400  | [experiment_4/_description.md](experiment_4/_description.md) |
+| experiment 5 | weighted-random |   1000    |  86400  | [experiment_5/_description.md](experiment_5/_description.md) |
+| experiment 6 |     pending     |    500    |  86400  | [experiment_6/_description.md](experiment_6/_description.md) |
 
-|                                | SLOC | analysis duration (s) | analysis duration (m) | timeout (Y/N) |    High     | Medium | Low | valid finds |
-|:-------------------------------|:----:|:---------------------:|:---------------------:|:-------------:|:-----------:|:------:|:---:|:-----------:|
-| Auction.sol                    | 116  |         1301          |          22           |       N       |      0      |   0    |  6  |      1      |          
-| ETHx.sol                       |  50  |         6097          |          102          |       N       |      0      |   0    |  0  |      0      |          
-| NodeELRewardVault.sol          |  32  |          17           |           0           |       N       |      0      |   0    |  0  |      0      |          
-| OperatorRewardsCollector.sol   |  39  |          209          |           3           |       N       |      0      |   0    |  0  |      0      |          
-| Penalty.sol                    | 106  |         8328          |          139          |       N       |      0      |   0    |  0  |      0      |          
-| PermissionedNodeRegistry.sol   | 524  |         7574          |          126          |       N       |  3 (3 IAB)  |   0    |  0  |      0      |          
-| PermissionedPool.sol           | 252  |         3741          |          62           |       N       |  7 (7 IAB)  |   0    |  3  |      0      |          
-| PermissionlessNodeRegistry.sol | 502  |         24974         |          416          |       N       |  3 (3 IAB)  |   0    |  0  |      0      |          
-| PermissionlessPool.sol         | 216  |         3631          |          61           |       N       |  9 (9 IAB)  |   0    |  3  |      0      |          
-| PoolSelector.sol               | 108  |         2285          |          38           |       N       |  7 (7 IAB)  |   0    |  3  |      0      |          
-| PoolUtils.sol                  | 232  |         4082          |          68           |       N       |  3 (3 IAB)  |   0    |  0  |      0      |          
-| SDCollateral.sol               | 172  |         3103          |          52           |       N       |      0      |   0    |  2  |      0      |          
-| SocializingPool.sol            | 180  |         3217          |          54           |       N       |      0      |   0    |  0  |      0      |          
-| StaderConfig.sol               | 374  |          495          |           8           |       N       |      0      |   0    |  0  |      0      |          
-| StaderInsuranceFund.sol        |  52  |          163          |           3           |       N       |      1      |   1    |  2  |      0      |          
-| StaderOracle.sol               | 589  |         39518         |          659          |       N       |  1 (1 IAB)  |   0    |  2  |      0      |          
-| StaderStakePoolsManager.sol    | 213  |         3675          |          61           |       N       |      0      |   0    |  6  |      0      |          
-| UserWithdrawalManager.sol      | 176  |          953          |          16           |       N       |      0      |   0    |  0  |      0      |          
-| UtilLib.sol                    | 143  |           4           |           0           |       N       |      0      |   0    |  0  |      0      |          
-| ValidatorWithdrawalVault.sol   | 125  |          41           |           1           |       N       |      0      |   0    |  0  |      0      |          
-| VaultFactory.sol               |  77  |          107          |           2           |       N       |      0      |   0    |  0  |      0      |          
-| VaultProxy.sol                 |  56  |          319          |           5           |       N       |      1      |   0    |  1  |      1      |          
-| OVERALL                        | 4334 |        113834         |         1897          |               | 35 (33 IAB) |   1    | 28  |      2      |        
+|                           | SLOC | analysis duration (s) | analysis duration (m) | timeout (Y/N) |    High     | Medium | Low | valid finds |
+|:--------------------------|:----:|:---------------------:|:---------------------:|:-------------:|:-----------:|:------:|:---:|:-----------:|
+| experiment 1              | 4334 |        113834         |         1897          |               | 35 (33 IAB) |   1    | 28  |      2      |
+| experiment 2              | 4334 |        137653         |         2294          |               | 33 (31 IAB) |   1    | 25  |      2      |
+| experiment 3              | 4334 |        175376         |         2923          |               | 44 (42 IAB) |   1    | 27  |      2      |
+| experiment 4              | 4334 |        175646         |         2927          |               | 38 (36 IAB) |   1    | 28  |      2      |
+| experiment 5              | 4334 |        177329         |         2955          |               | 37 (35 IAB) |   1    | 27  |      2      |
+| experiment 6              | 4334 |        174345         |         2906          |               | 38 (36 IAB) |   1    | 27  |      2      |
+| Unique finds and averages | 4334 |        159030         |         2650          |               | 44 (42 IAB) |   1    | 28  |      2      |
 
+
+# SLITHER REPORT
+|                                 | SLOC | analysis duration (s) | High | Medium | Low | valid finds |
+|:-------------------------------:|:----:|:---------------------:|:----:|:------:|:---:|:-----------:|
+|          Auction.json           | 116  |         4.58          |  0   |   20   |  3  |      0      |
+|            ETHx.json            |  50  |         4.71          |  0   |   18   |  0  |      0      |
+|     NodeELRewardVault.json      |  32  |         2.48          |  0   |   10   |  1  |      0      |
+|  OperatorRewardsCollector.json  |  39  |         4.08          |  0   |   18   |  1  |      0      |
+|          Penalty.json           | 106  |         4.37          |  0   |   18   |  5  |     2L      |
+|  PermissionedNodeRegistry.json  | 524  |         6.65          |  0   |   31   | 11  |      0      |
+|      PermissionedPool.json      | 252  |         5.62          |  1   |   29   | 17  |      0      |
+| PermissionlessNodeRegistry.json | 502  |         6.24          |  4   |   23   | 13  |      0      |
+|     PermissionlessPool.json     | 216  |         5.38          |  1   |   28   | 11  |      0      |
+|        PoolSelector.json        | 108  |         4.74          |  0   |   27   |  2  |      0      |
+|         PoolUtils.json          | 232  |          4.5          |  0   |   20   |  6  |      0      |
+|        SDCollateral.json        | 172  |         5.17          |  0   |   27   |  2  |      0      |
+|      SocializingPool.json       | 180  |         5.29          |  2   |   20   |  2  |     1L      |
+|        StaderConfig.json        | 374  |         5.04          |  0   |   18   |  0  |      0      |
+|    StaderInsuranceFund.json     |  52  |         4.12          |  1   |   19   |  0  |      0      |
+|        StaderOracle.json        | 589  |          6.0          |  0   |   22   |  0  |      0      |
+|  StaderStakePoolsManager.json   | 213  |         6.63          |  1   |   32   |  4  |      0      |
+|   UserWithdrawalManager.json    | 176  |         6.39          |  0   |   28   |  3  |     1L      |
+|          UtilLib.json           | 143  |          2.4          |  0   |   9    |  0  |      0      |
+|      ValidatorStatus.json       |  9   |         1.74          |  0   |   0    |  0  |      0      |
+|  ValidatorWithdrawalVault.json  | 125  |         3.47          |  1   |   19   |  4  |     1L      |
+|        VaultFactory.json        |  77  |         4.45          |  1   |   18   |  4  |     2L      |
+|         VaultProxy.json         |  56  |         2.51          |  1   |   9    |  1  |   1H, 1L    |
+
+## Valid finds
+### High
+#### controlled-delegatecall
+Reported as high in [[H-01] VaultProxy implementation can be initialized by anyone and self-destructed](https://github.com/code-423n4/2023-06-stader-findings/issues/418)
+Find in VaultProxy.sol
+### Low
+#### reentrancy-events
+Reported as not-critical in [Bot report - N-12](https://gist.github.com/CloudEllie/9a06bd326750de18279979886ed93ffd#n12-events-may-be-emitted-out-of-order-due-to-reentrancy)
+Find in UserWithdrawalManager.sol
+#### missing-zero-check
+Reported as low in [Bot report - L-03](https://gist.github.com/CloudEllie/9a06bd326750de18279979886ed93ffd#l03-missing-checks-for-address0x0-when-assigning-values-to-address-state-variables)
+Finds in Penalty.sol (x2), SocializingPool.sol, ValidatorWithdrawalVault.sol, VaultFactory.sol (x2), VaultProxy.sol
+
+
+# SMARTCHECK REPORT
+|                            | SLOC | High | Medium | Low | valid finds |
+|:--------------------------:|:----:|:----:|:------:|:---:|:-----------:|
+|          Auction           | 116  |  0   |   0    | 173 |      0      |
+|            ETHx            |  50  |  0   |   1    | 140 |      0      |
+|     NodeELRewardVault      |  32  |  0   |   0    | 122 |      0      |
+|  OperatorRewardsCollector  |  39  |  2   |   0    | 130 |      0      |
+|          Penalty           | 106  |  0   |   1    | 206 |      0      |
+|  PermissionedNodeRegistry  | 524  |  1   |   1    | 180 |      0      |
+|      PermissionedPool      | 252  |  0   |   0    | 184 |      0      |
+| PermissionlessNodeRegistry | 502  |  0   |   0    | 197 |      0      |
+|     PermissionlessPool     | 216  |  0   |   0    | 182 |      0      |
+|        PoolSelector        | 108  |  0   |   2    | 146 |      0      |
+|         PoolUtils          | 232  |  0   |   1    | 143 |      0      |
+|        SDCollateral        | 172  |  0   |   0    | 243 |      0      |
+|      SocializingPool       | 180  |  0   |   2    | 212 |      0      |
+|        StaderConfig        | 374  |  0   |   0    | 133 |      0      |
+|    StaderInsuranceFund     |  52  |  1   |   0    | 138 |      0      |
+|        StaderOracle        | 589  |  0   |   2    | 228 |      0      |
+|  StaderStakePoolsManager   | 213  |  0   |   1    | 284 |      0      |
+|   UserWithdrawalManager    | 176  |  5   |   1    | 265 |      0      |
+|          UtilLib           | 143  |  0   |   0    | 98  |      0      |
+|      ValidatorStatus       |  9   |  0   |   0    |  0  |      0      |
+|  ValidatorWithdrawalVault  | 125  |  1   |   0    | 150 |      0      |
+|        VaultFactory        |  77  |  1   |   0    | 147 |      0      |
+|         VaultProxy         |  56  |  1   |   0    | 109 |    1H 1L    |
+
+
+## Valid finds
+### High
+#### SOLIDITY_UNCHECKED_CALL
+Reported as high in [[H-01] VaultProxy implementation can be initialized by anyone and self-destructed](https://github.com/code-423n4/2023-06-stader-findings/issues/418)
+Find in VaultProxy.sol
+
+### Low
+#### SOLIDITY_PRAGMAS_VERSION
+(See [Bot report: [N‑29] Non-library/interface files should use fixed compiler versions, not floating ones](https://gist.github.com/CloudEllie/9a06bd326750de18279979886ed93ffd#n29-non-libraryinterface-files-should-use-fixed-compiler-versions-not-floating-ones))
+reported as not critical in bot report
+Find in VaultProxy.sol
 
 # BOT REPORT
 
