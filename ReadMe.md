@@ -69,7 +69,7 @@ We performed experiments on flatten solidity code, i.e. solidity files in which 
 
 
 ## Tool report
-We report only valid finds with severity criteria of Code4rena
+We report only valid finds according to [severity criteria of Code4rena](https://docs.code4rena.com/awarding/judging-criteria/severity-categorization)
 
 |            | High | Medium | Low |
 |:----------:|:----:|:------:|:---:|
@@ -141,7 +141,7 @@ We report only valid finds with severity criteria of Code4rena
 
 
 ## Tool report
-We report only valid finds with severity criteria of Code4rena
+We report only valid finds according to [severity criteria of Code4rena](https://docs.code4rena.com/awarding/judging-criteria/severity-categorization)
 
 |            | High | Medium | Low |
 |:----------:|:----:|:------:|:---:|
@@ -213,7 +213,7 @@ We report only valid finds with severity criteria of Code4rena
 
 
 ## Tool report
-We report only valid finds with severity criteria of Code4rena
+We report only valid finds according to [severity criteria of Code4rena](https://docs.code4rena.com/awarding/judging-criteria/severity-categorization)
 
 |            | High | Medium | Low |
 |:----------:|:----:|:------:|:---:|
@@ -285,7 +285,7 @@ We report only valid finds with severity criteria of Code4rena
 
 
 ## Tool report
-We report only valid finds with severity criteria of Code4rena
+We report only valid finds according to [severity criteria of Code4rena](https://docs.code4rena.com/awarding/judging-criteria/severity-categorization)
 
 |            | High | Medium | Low |
 |:----------:|:----:|:------:|:---:|
@@ -517,45 +517,3 @@ It is due to import of ```ReentrancyGuardUpgradeable.sol```, a contract from ope
 This module aims to avoid reentrancy. In order to do so, it permit only one call at a time.
 So, vulnerability reported by Mythril can't be exploited, because _status variable avoids reentrancy.
 
-# Analysis of medium bot finds
-
-## JUICEBOX M-01 Fee-on-transfer/rebasing tokens will have problems when swapping
-
-### contract
-JBXBuybackDelegate.sol
-[JBXBuybackDelegate.sol#L258-L289](https://github.com/code-423n4/2023-05-juicebox/blob/9a36e5c8d0588f0f262a0cd1c08e34b2184d8f4d/juice-buyback/contracts/JBXBuybackDelegate.sol#L258-L289)
-
-### Analysis of vulnerability validity
-
-## JUICEBOX M-02 Unsafe use of ```transfer()```/```transferFrom()``` with ```IERC20 ```
-
-### contract
-JBXBuybackDelegate.sol
-
-### Analysis of vulnerability validity
-
-## JUICEBOX M-03 Return values of ```transfer()```/```transferFrom()``` not checked
-
-### contract
-JBXBuybackDelegate.sol
-
-### Analysis of vulnerability validity
-
-## LLAMA M-01 Some tokens may revert when zero value transfers are made
-
-### contract
-LlamaAccount.sol
-
-### Analysis of vulnerability validity
-
-## LLAMA M-02 ```_safeMint()``` should be used rather than _mint() wherever possible
-
-### contract
-LlamaPolicy.sol
-
-### Analysis of vulnerability validity
-
-## STADER M-01 The ```owner``` is a single point of failure and a centralization risk
-
-### contract
-VaultProxy.sol
