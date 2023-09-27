@@ -1,0 +1,1478 @@
+{
+    "ABI": null,
+    "address": null,
+    "category": "Code4rena Contests",
+    "comment": "",
+    "contracts": [
+        "LlamaPolicyMetadataParamRegistry"
+    ],
+    "failedTool": [],
+    "knownMAB": [],
+    "knownSWC_ID": [],
+    "name": "LlamaPolicyMetadataParamRegistry",
+    "references": [
+        "https://github.com/code-423n4/2023-06-llama/blob/main/src/LlamaPolicyMetadataParamRegistry.sol",
+        "https://code4rena.com/contests/2023-06-llama",
+        "hhttps://github.com/code-423n4/2023-06-llama"
+    ],
+    "solidityCode": "// SPDX-License-Identifier: MIT\npragma solidity 0.8.19;\n\n/// @title Llama Executor\n/// @author Llama (devsdosomething@llama.xyz)\n/// @notice The exit point of a Llama instance. It calls the target contract during action execution.\ncontract LlamaExecutor {\n  /// @dev Only callable by a Llama instance's core contract.\n  error OnlyLlamaCore();\n\n  /// @notice The core contract for this Llama instance.\n  address public immutable LLAMA_CORE;\n\n  /// @notice This contract is deployed in the core's `initialize` function.\n  constructor() {\n    LLAMA_CORE = msg.sender;\n  }\n\n  /// @notice Called by `executeAction` in the core contract to make the call described by the action.\n  /// @dev Using a separate executor contract ensures `target` being delegatecalled cannot write to `LlamaCore`'s\n  /// storage. By using a sole executor for calls and delegatecalls,\n  /// a Llama instance is represented by one contract address.\n  /// @param target The contract called when the action is executed.\n  /// @param value The value in wei to be sent when the action is executed.\n  /// @param isScript A boolean that determines if the target is a script and should be delegatecalled.\n  /// @param data Data to be called on the `target` when the action is executed.\n  /// @return success A boolean that indicates if the call succeeded.\n  /// @return result The data returned by the function being called.\n  function execute(address target, uint256 value, bool isScript, bytes calldata data)\n    external\n    returns (bool success, bytes memory result)\n  {\n    if (msg.sender != LLAMA_CORE) revert OnlyLlamaCore();\n    (success, result) = isScript ? target.delegatecall(data) : target.call{value: value}(data);\n  }\n}\n\n/// @title Llama Policy Metadata Parameter Registry\n/// @author Llama (devsdosomething@llama.xyz)\n/// @notice Parameter Registry contract for onchain SVG colors and logos.\ncontract LlamaPolicyMetadataParamRegistry {\n  // ======================================\n  // ======== Errors and Modifiers ========\n  // ======================================\n\n  /// @dev Only callable by a Llama instance's executor, the root Llama instance's executor or the Llama factory.\n  error UnauthorizedCaller();\n\n  /// @dev Only the Llama instance, the root Llama instance, or the Llama factory can update an instance's color and\n  /// logo.\n  modifier onlyAuthorized(LlamaExecutor llamaExecutor) {\n    if (\n      msg.sender != address(llamaExecutor) && msg.sender != address(ROOT_LLAMA_EXECUTOR) && msg.sender != LLAMA_FACTORY\n    ) revert UnauthorizedCaller();\n    _;\n  }\n\n  // ========================\n  // ======== Events ========\n  // ========================\n\n  /// @dev Emitted when the color code for SVG of a Llama instance is set.\n  event ColorSet(LlamaExecutor indexed llamaExecutor, string color);\n\n  /// @dev Emitted when the logo for SVG of a Llama instance is set.\n  event LogoSet(LlamaExecutor indexed llamaExecutor, string logo);\n\n  // ==================================================\n  // ======== Immutables and Storage Variables ========\n  // ==================================================\n\n  /// @notice The Root Llama instance's executor.\n  LlamaExecutor public immutable ROOT_LLAMA_EXECUTOR;\n\n  /// @notice The Llama factory.\n  address public immutable LLAMA_FACTORY;\n\n  /// @notice Mapping of Llama instance to color code for SVG.\n  mapping(LlamaExecutor => string) public color;\n\n  /// @notice Mapping of Llama instance to logo for SVG.\n  mapping(LlamaExecutor => string) public logo;\n\n  // ======================================================\n  // ======== Contract Creation and Initialization ========\n  // ======================================================\n\n  /// @notice This contract is deployed in the Llama factory's constructor.\n  constructor(LlamaExecutor rootLlamaExecutor) {\n    ROOT_LLAMA_EXECUTOR = rootLlamaExecutor;\n    LLAMA_FACTORY = msg.sender;\n\n    string memory rootColor = \"#6A45EC\";\n    string memory rootLogo =\n      '<g><path fill=\"#fff\" d=\"M91.749 446.038H85.15v2.785h2.54v14.483h-3.272v2.785h9.746v-2.785h-2.416v-17.268ZM104.122 446.038h-6.598v2.785h2.54v14.483h-3.271v2.785h9.745v-2.785h-2.416v-17.268ZM113.237 456.162c.138-1.435 1.118-2.2 2.885-2.2 1.767 0 2.651.765 2.651 2.423v.403l-4.859.599c-2.885.362-5.149 1.63-5.149 4.484 0 2.841 2.14 4.47 5.383 4.47 2.72 0 3.921-1.044 4.487-1.935h.276v1.685h3.782v-9.135c0-3.983-2.54-5.78-6.488-5.78-3.975 0-6.404 1.797-6.694 4.568v.418h3.726Zm-.483 5.528c0-1.1.829-1.629 2.03-1.796l3.989-.529v.626c0 2.354-1.546 3.537-3.672 3.537-1.491 0-2.347-.724-2.347-1.838ZM125.765 466.091h3.727v-9.386c0-1.796.938-2.576 2.25-2.576 1.173 0 1.753.682 1.753 1.838v10.124h3.727v-9.386c0-1.796.939-2.576 2.236-2.576 1.187 0 1.753.682 1.753 1.838v10.124h3.741v-10.639c0-2.646-1.657-4.22-4.183-4.22-2.264 0-3.312.989-3.92 2.075h-.276c-.414-.947-1.436-2.075-3.534-2.075-2.056 0-2.954.864-3.45 1.741h-.277v-1.462h-3.547v14.58ZM151.545 456.162c.138-1.435 1.118-2.2 2.885-2.2 1.767 0 2.65.765 2.65 2.423v.403l-4.859.599c-2.885.362-5.149 1.63-5.149 4.484 0 2.841 2.14 4.47 5.384 4.47 2.719 0 3.92-1.044 4.486-1.935h.276v1.685H161v-9.135c0-3.983-2.54-5.78-6.488-5.78-3.975 0-6.404 1.797-6.694 4.568v.418h3.727Zm-.484 5.528c0-1.1.829-1.629 2.03-1.796l3.989-.529v.626c0 2.354-1.546 3.537-3.672 3.537-1.491 0-2.347-.724-2.347-1.838Z\"/><g fill=\"#6A45EC\"><path d=\"M36.736 456.934c.004-.338.137-.661.372-.901.234-.241.552-.38.886-.389h16.748a5.961 5.961 0 0 0 2.305-.458 6.036 6.036 0 0 0 3.263-3.287c.303-.737.46-1.528.46-2.326V428h-4.738v21.573c-.004.337-.137.66-.372.901-.234.24-.552.379-.886.388H38.01a5.984 5.984 0 0 0-4.248 1.781A6.108 6.108 0 0 0 32 456.934v14.891h4.736v-14.891ZM62.868 432.111h-.21l.2.204v4.448h4.36l2.043 2.084a6.008 6.008 0 0 0-3.456 2.109 6.12 6.12 0 0 0-1.358 3.841v27.034h4.717v-27.04c.005-.341.14-.666.38-.907.237-.24.56-.378.897-.383h.726c2.783 0 3.727-1.566 4.006-2.224.28-.658.711-2.453-1.257-4.448l-4.617-4.702h-1.437M50.34 469.477a7.728 7.728 0 0 1 3.013.61c.955.403 1.82.994 2.547 1.738h5.732a12.645 12.645 0 0 0-4.634-5.201 12.467 12.467 0 0 0-6.658-1.93c-2.355 0-4.662.669-6.659 1.93a12.644 12.644 0 0 0-4.634 5.201h5.733a7.799 7.799 0 0 1 2.546-1.738 7.728 7.728 0 0 1 3.014-.61Z\"/></g></g>';\n    setColor(ROOT_LLAMA_EXECUTOR, rootColor);\n    setLogo(ROOT_LLAMA_EXECUTOR, rootLogo);\n  }\n\n  // ===========================================\n  // ======== External and Public Logic ========\n  // ===========================================\n\n  /// @notice Gets the color code and logo for SVG of a Llama instance.\n  /// @param llamaExecutor The Llama instance's executor.\n  function getMetadata(LlamaExecutor llamaExecutor) external view returns (string memory _color, string memory _logo) {\n    _color = color[llamaExecutor];\n    _logo = logo[llamaExecutor];\n  }\n\n  /// @notice Sets the color code for SVG of a Llama instance.\n  /// @param llamaExecutor The Llama instance's executor.\n  /// @param _color The color code as a hex value (eg. #00FF00)\n  function setColor(LlamaExecutor llamaExecutor, string memory _color) public onlyAuthorized(llamaExecutor) {\n    color[llamaExecutor] = _color;\n    emit ColorSet(llamaExecutor, _color);\n  }\n\n  /// @notice Sets the logo for SVG of a Llama instance.\n  /// @param llamaExecutor The Llama instance's executor.\n  /// @param _logo The logo.\n  function setLogo(LlamaExecutor llamaExecutor, string memory _logo) public onlyAuthorized(llamaExecutor) {\n    logo[llamaExecutor] = _logo;\n    emit LogoSet(llamaExecutor, _logo);\n  }\n}\n",
+    "solidityCodeAttacker": null,
+    "solidityCodeFixed": null,
+    "successfullTool": [
+        "Slither"
+    ],
+    "z_analysisDetails": {
+        "statistics": [
+            {
+                "Duration": 1.8262007236480713,
+                "Tool": "Slither"
+            }
+        ],
+        "vulnerabilities": [
+            {
+                "Result": [
+                    {
+                        "check": "controlled-delegatecall",
+                        "confidence": "Medium",
+                        "description": "LlamaExecutor.execute(address,uint256,bool,bytes) (foo.sol#29-35) uses delegatecall to a input-controlled function id\n\t- (success,result) = target.delegatecall(data) (foo.sol#34)\n",
+                        "elements": [
+                            {
+                                "name": "execute",
+                                "source_mapping": {
+                                    "ending_column": 4,
+                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                    "filename_relative": "foo.sol",
+                                    "filename_short": "foo.sol",
+                                    "is_dependency": false,
+                                    "length": 306,
+                                    "lines": [
+                                        29,
+                                        30,
+                                        31,
+                                        32,
+                                        33,
+                                        34,
+                                        35
+                                    ],
+                                    "start": 1390,
+                                    "starting_column": 3
+                                },
+                                "type": "function",
+                                "type_specific_fields": {
+                                    "parent": {
+                                        "name": "LlamaExecutor",
+                                        "source_mapping": {
+                                            "ending_column": 2,
+                                            "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                            "filename_relative": "foo.sol",
+                                            "filename_short": "foo.sol",
+                                            "is_dependency": false,
+                                            "length": 1467,
+                                            "lines": [
+                                                7,
+                                                8,
+                                                9,
+                                                10,
+                                                11,
+                                                12,
+                                                13,
+                                                14,
+                                                15,
+                                                16,
+                                                17,
+                                                18,
+                                                19,
+                                                20,
+                                                21,
+                                                22,
+                                                23,
+                                                24,
+                                                25,
+                                                26,
+                                                27,
+                                                28,
+                                                29,
+                                                30,
+                                                31,
+                                                32,
+                                                33,
+                                                34,
+                                                35,
+                                                36
+                                            ],
+                                            "start": 231,
+                                            "starting_column": 1
+                                        },
+                                        "type": "contract"
+                                    },
+                                    "signature": "execute(address,uint256,bool,bytes)"
+                                }
+                            },
+                            {
+                                "name": "(success,result) = target.delegatecall(data)",
+                                "source_mapping": {
+                                    "ending_column": 95,
+                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                    "filename_relative": "foo.sol",
+                                    "filename_short": "foo.sol",
+                                    "is_dependency": false,
+                                    "length": 90,
+                                    "lines": [
+                                        34
+                                    ],
+                                    "start": 1601,
+                                    "starting_column": 5
+                                },
+                                "type": "node",
+                                "type_specific_fields": {
+                                    "parent": {
+                                        "name": "execute",
+                                        "source_mapping": {
+                                            "ending_column": 4,
+                                            "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                            "filename_relative": "foo.sol",
+                                            "filename_short": "foo.sol",
+                                            "is_dependency": false,
+                                            "length": 306,
+                                            "lines": [
+                                                29,
+                                                30,
+                                                31,
+                                                32,
+                                                33,
+                                                34,
+                                                35
+                                            ],
+                                            "start": 1390,
+                                            "starting_column": 3
+                                        },
+                                        "type": "function",
+                                        "type_specific_fields": {
+                                            "parent": {
+                                                "name": "LlamaExecutor",
+                                                "source_mapping": {
+                                                    "ending_column": 2,
+                                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                                    "filename_relative": "foo.sol",
+                                                    "filename_short": "foo.sol",
+                                                    "is_dependency": false,
+                                                    "length": 1467,
+                                                    "lines": [
+                                                        7,
+                                                        8,
+                                                        9,
+                                                        10,
+                                                        11,
+                                                        12,
+                                                        13,
+                                                        14,
+                                                        15,
+                                                        16,
+                                                        17,
+                                                        18,
+                                                        19,
+                                                        20,
+                                                        21,
+                                                        22,
+                                                        23,
+                                                        24,
+                                                        25,
+                                                        26,
+                                                        27,
+                                                        28,
+                                                        29,
+                                                        30,
+                                                        31,
+                                                        32,
+                                                        33,
+                                                        34,
+                                                        35,
+                                                        36
+                                                    ],
+                                                    "start": 231,
+                                                    "starting_column": 1
+                                                },
+                                                "type": "contract"
+                                            },
+                                            "signature": "execute(address,uint256,bool,bytes)"
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "first_markdown_element": "foo.sol#L29-L35",
+                        "id": "d137bb0d172996dec21754799668eba90ac2400d495615e7344d25084edc2257",
+                        "impact": "High",
+                        "markdown": "[LlamaExecutor.execute(address,uint256,bool,bytes)](foo.sol#L29-L35) uses delegatecall to a input-controlled function id\n\t- [(success,result) = target.delegatecall(data)](foo.sol#L34)\n"
+                    },
+                    {
+                        "check": "missing-zero-check",
+                        "confidence": "Medium",
+                        "description": "LlamaExecutor.execute(address,uint256,bool,bytes).target (foo.sol#29) lacks a zero-check on :\n\t\t- (success,result) = target.delegatecall(data) (foo.sol#34)\n\t\t- (success,result) = target.call{value: value}(data) (foo.sol#34)\n",
+                        "elements": [
+                            {
+                                "name": "target",
+                                "source_mapping": {
+                                    "ending_column": 34,
+                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                    "filename_relative": "foo.sol",
+                                    "filename_short": "foo.sol",
+                                    "is_dependency": false,
+                                    "length": 14,
+                                    "lines": [
+                                        29
+                                    ],
+                                    "start": 1407,
+                                    "starting_column": 20
+                                },
+                                "type": "variable",
+                                "type_specific_fields": {
+                                    "parent": {
+                                        "name": "execute",
+                                        "source_mapping": {
+                                            "ending_column": 4,
+                                            "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                            "filename_relative": "foo.sol",
+                                            "filename_short": "foo.sol",
+                                            "is_dependency": false,
+                                            "length": 306,
+                                            "lines": [
+                                                29,
+                                                30,
+                                                31,
+                                                32,
+                                                33,
+                                                34,
+                                                35
+                                            ],
+                                            "start": 1390,
+                                            "starting_column": 3
+                                        },
+                                        "type": "function",
+                                        "type_specific_fields": {
+                                            "parent": {
+                                                "name": "LlamaExecutor",
+                                                "source_mapping": {
+                                                    "ending_column": 2,
+                                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                                    "filename_relative": "foo.sol",
+                                                    "filename_short": "foo.sol",
+                                                    "is_dependency": false,
+                                                    "length": 1467,
+                                                    "lines": [
+                                                        7,
+                                                        8,
+                                                        9,
+                                                        10,
+                                                        11,
+                                                        12,
+                                                        13,
+                                                        14,
+                                                        15,
+                                                        16,
+                                                        17,
+                                                        18,
+                                                        19,
+                                                        20,
+                                                        21,
+                                                        22,
+                                                        23,
+                                                        24,
+                                                        25,
+                                                        26,
+                                                        27,
+                                                        28,
+                                                        29,
+                                                        30,
+                                                        31,
+                                                        32,
+                                                        33,
+                                                        34,
+                                                        35,
+                                                        36
+                                                    ],
+                                                    "start": 231,
+                                                    "starting_column": 1
+                                                },
+                                                "type": "contract"
+                                            },
+                                            "signature": "execute(address,uint256,bool,bytes)"
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "name": "(success,result) = target.delegatecall(data)",
+                                "source_mapping": {
+                                    "ending_column": 95,
+                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                    "filename_relative": "foo.sol",
+                                    "filename_short": "foo.sol",
+                                    "is_dependency": false,
+                                    "length": 90,
+                                    "lines": [
+                                        34
+                                    ],
+                                    "start": 1601,
+                                    "starting_column": 5
+                                },
+                                "type": "node",
+                                "type_specific_fields": {
+                                    "parent": {
+                                        "name": "execute",
+                                        "source_mapping": {
+                                            "ending_column": 4,
+                                            "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                            "filename_relative": "foo.sol",
+                                            "filename_short": "foo.sol",
+                                            "is_dependency": false,
+                                            "length": 306,
+                                            "lines": [
+                                                29,
+                                                30,
+                                                31,
+                                                32,
+                                                33,
+                                                34,
+                                                35
+                                            ],
+                                            "start": 1390,
+                                            "starting_column": 3
+                                        },
+                                        "type": "function",
+                                        "type_specific_fields": {
+                                            "parent": {
+                                                "name": "LlamaExecutor",
+                                                "source_mapping": {
+                                                    "ending_column": 2,
+                                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                                    "filename_relative": "foo.sol",
+                                                    "filename_short": "foo.sol",
+                                                    "is_dependency": false,
+                                                    "length": 1467,
+                                                    "lines": [
+                                                        7,
+                                                        8,
+                                                        9,
+                                                        10,
+                                                        11,
+                                                        12,
+                                                        13,
+                                                        14,
+                                                        15,
+                                                        16,
+                                                        17,
+                                                        18,
+                                                        19,
+                                                        20,
+                                                        21,
+                                                        22,
+                                                        23,
+                                                        24,
+                                                        25,
+                                                        26,
+                                                        27,
+                                                        28,
+                                                        29,
+                                                        30,
+                                                        31,
+                                                        32,
+                                                        33,
+                                                        34,
+                                                        35,
+                                                        36
+                                                    ],
+                                                    "start": 231,
+                                                    "starting_column": 1
+                                                },
+                                                "type": "contract"
+                                            },
+                                            "signature": "execute(address,uint256,bool,bytes)"
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "name": "(success,result) = target.call{value: value}(data)",
+                                "source_mapping": {
+                                    "ending_column": 95,
+                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                    "filename_relative": "foo.sol",
+                                    "filename_short": "foo.sol",
+                                    "is_dependency": false,
+                                    "length": 90,
+                                    "lines": [
+                                        34
+                                    ],
+                                    "start": 1601,
+                                    "starting_column": 5
+                                },
+                                "type": "node",
+                                "type_specific_fields": {
+                                    "parent": {
+                                        "name": "execute",
+                                        "source_mapping": {
+                                            "ending_column": 4,
+                                            "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                            "filename_relative": "foo.sol",
+                                            "filename_short": "foo.sol",
+                                            "is_dependency": false,
+                                            "length": 306,
+                                            "lines": [
+                                                29,
+                                                30,
+                                                31,
+                                                32,
+                                                33,
+                                                34,
+                                                35
+                                            ],
+                                            "start": 1390,
+                                            "starting_column": 3
+                                        },
+                                        "type": "function",
+                                        "type_specific_fields": {
+                                            "parent": {
+                                                "name": "LlamaExecutor",
+                                                "source_mapping": {
+                                                    "ending_column": 2,
+                                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                                    "filename_relative": "foo.sol",
+                                                    "filename_short": "foo.sol",
+                                                    "is_dependency": false,
+                                                    "length": 1467,
+                                                    "lines": [
+                                                        7,
+                                                        8,
+                                                        9,
+                                                        10,
+                                                        11,
+                                                        12,
+                                                        13,
+                                                        14,
+                                                        15,
+                                                        16,
+                                                        17,
+                                                        18,
+                                                        19,
+                                                        20,
+                                                        21,
+                                                        22,
+                                                        23,
+                                                        24,
+                                                        25,
+                                                        26,
+                                                        27,
+                                                        28,
+                                                        29,
+                                                        30,
+                                                        31,
+                                                        32,
+                                                        33,
+                                                        34,
+                                                        35,
+                                                        36
+                                                    ],
+                                                    "start": 231,
+                                                    "starting_column": 1
+                                                },
+                                                "type": "contract"
+                                            },
+                                            "signature": "execute(address,uint256,bool,bytes)"
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "first_markdown_element": "foo.sol#L29",
+                        "id": "1ec006ea5083a94670a266388b230412b477ce6e7e5b9527648cf5b7ed8beefa",
+                        "impact": "Low",
+                        "markdown": "[LlamaExecutor.execute(address,uint256,bool,bytes).target](foo.sol#L29) lacks a zero-check on :\n\t\t- [(success,result) = target.delegatecall(data)](foo.sol#L34)\n\t\t- [(success,result) = target.call{value: value}(data)](foo.sol#L34)\n"
+                    },
+                    {
+                        "check": "solc-version",
+                        "confidence": "High",
+                        "description": "solc-0.8.19 is not recommended for deployment\n",
+                        "elements": [],
+                        "first_markdown_element": "",
+                        "id": "bc0e6f5edf86fec0e8668af5b6535a97ff60d9ff435d7796649d79d0b5e89ed6",
+                        "impact": "Informational",
+                        "markdown": "solc-0.8.19 is not recommended for deployment\n"
+                    },
+                    {
+                        "check": "solc-version",
+                        "confidence": "High",
+                        "description": "Pragma version0.8.19 (foo.sol#2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.\n",
+                        "elements": [
+                            {
+                                "name": "0.8.19",
+                                "source_mapping": {
+                                    "ending_column": 24,
+                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                    "filename_relative": "foo.sol",
+                                    "filename_short": "foo.sol",
+                                    "is_dependency": false,
+                                    "length": 23,
+                                    "lines": [
+                                        2
+                                    ],
+                                    "start": 32,
+                                    "starting_column": 1
+                                },
+                                "type": "pragma",
+                                "type_specific_fields": {
+                                    "directive": [
+                                        "solidity",
+                                        "0.8",
+                                        ".19"
+                                    ]
+                                }
+                            }
+                        ],
+                        "first_markdown_element": "foo.sol#L2",
+                        "id": "db7d515e5df202ecf5cda8e9fb1abcad99850b3de3fb1bedd29f944ee743c36e",
+                        "impact": "Informational",
+                        "markdown": "Pragma version[0.8.19](foo.sol#L2) necessitates a version too recent to be trusted. Consider deploying with 0.8.18.\n"
+                    },
+                    {
+                        "check": "low-level-calls",
+                        "confidence": "High",
+                        "description": "Low level call in LlamaExecutor.execute(address,uint256,bool,bytes) (foo.sol#29-35):\n\t- (success,result) = target.delegatecall(data) (foo.sol#34)\n\t- (success,result) = target.call{value: value}(data) (foo.sol#34)\n",
+                        "elements": [
+                            {
+                                "name": "execute",
+                                "source_mapping": {
+                                    "ending_column": 4,
+                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                    "filename_relative": "foo.sol",
+                                    "filename_short": "foo.sol",
+                                    "is_dependency": false,
+                                    "length": 306,
+                                    "lines": [
+                                        29,
+                                        30,
+                                        31,
+                                        32,
+                                        33,
+                                        34,
+                                        35
+                                    ],
+                                    "start": 1390,
+                                    "starting_column": 3
+                                },
+                                "type": "function",
+                                "type_specific_fields": {
+                                    "parent": {
+                                        "name": "LlamaExecutor",
+                                        "source_mapping": {
+                                            "ending_column": 2,
+                                            "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                            "filename_relative": "foo.sol",
+                                            "filename_short": "foo.sol",
+                                            "is_dependency": false,
+                                            "length": 1467,
+                                            "lines": [
+                                                7,
+                                                8,
+                                                9,
+                                                10,
+                                                11,
+                                                12,
+                                                13,
+                                                14,
+                                                15,
+                                                16,
+                                                17,
+                                                18,
+                                                19,
+                                                20,
+                                                21,
+                                                22,
+                                                23,
+                                                24,
+                                                25,
+                                                26,
+                                                27,
+                                                28,
+                                                29,
+                                                30,
+                                                31,
+                                                32,
+                                                33,
+                                                34,
+                                                35,
+                                                36
+                                            ],
+                                            "start": 231,
+                                            "starting_column": 1
+                                        },
+                                        "type": "contract"
+                                    },
+                                    "signature": "execute(address,uint256,bool,bytes)"
+                                }
+                            },
+                            {
+                                "name": "(success,result) = target.delegatecall(data)",
+                                "source_mapping": {
+                                    "ending_column": 95,
+                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                    "filename_relative": "foo.sol",
+                                    "filename_short": "foo.sol",
+                                    "is_dependency": false,
+                                    "length": 90,
+                                    "lines": [
+                                        34
+                                    ],
+                                    "start": 1601,
+                                    "starting_column": 5
+                                },
+                                "type": "node",
+                                "type_specific_fields": {
+                                    "parent": {
+                                        "name": "execute",
+                                        "source_mapping": {
+                                            "ending_column": 4,
+                                            "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                            "filename_relative": "foo.sol",
+                                            "filename_short": "foo.sol",
+                                            "is_dependency": false,
+                                            "length": 306,
+                                            "lines": [
+                                                29,
+                                                30,
+                                                31,
+                                                32,
+                                                33,
+                                                34,
+                                                35
+                                            ],
+                                            "start": 1390,
+                                            "starting_column": 3
+                                        },
+                                        "type": "function",
+                                        "type_specific_fields": {
+                                            "parent": {
+                                                "name": "LlamaExecutor",
+                                                "source_mapping": {
+                                                    "ending_column": 2,
+                                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                                    "filename_relative": "foo.sol",
+                                                    "filename_short": "foo.sol",
+                                                    "is_dependency": false,
+                                                    "length": 1467,
+                                                    "lines": [
+                                                        7,
+                                                        8,
+                                                        9,
+                                                        10,
+                                                        11,
+                                                        12,
+                                                        13,
+                                                        14,
+                                                        15,
+                                                        16,
+                                                        17,
+                                                        18,
+                                                        19,
+                                                        20,
+                                                        21,
+                                                        22,
+                                                        23,
+                                                        24,
+                                                        25,
+                                                        26,
+                                                        27,
+                                                        28,
+                                                        29,
+                                                        30,
+                                                        31,
+                                                        32,
+                                                        33,
+                                                        34,
+                                                        35,
+                                                        36
+                                                    ],
+                                                    "start": 231,
+                                                    "starting_column": 1
+                                                },
+                                                "type": "contract"
+                                            },
+                                            "signature": "execute(address,uint256,bool,bytes)"
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "name": "(success,result) = target.call{value: value}(data)",
+                                "source_mapping": {
+                                    "ending_column": 95,
+                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                    "filename_relative": "foo.sol",
+                                    "filename_short": "foo.sol",
+                                    "is_dependency": false,
+                                    "length": 90,
+                                    "lines": [
+                                        34
+                                    ],
+                                    "start": 1601,
+                                    "starting_column": 5
+                                },
+                                "type": "node",
+                                "type_specific_fields": {
+                                    "parent": {
+                                        "name": "execute",
+                                        "source_mapping": {
+                                            "ending_column": 4,
+                                            "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                            "filename_relative": "foo.sol",
+                                            "filename_short": "foo.sol",
+                                            "is_dependency": false,
+                                            "length": 306,
+                                            "lines": [
+                                                29,
+                                                30,
+                                                31,
+                                                32,
+                                                33,
+                                                34,
+                                                35
+                                            ],
+                                            "start": 1390,
+                                            "starting_column": 3
+                                        },
+                                        "type": "function",
+                                        "type_specific_fields": {
+                                            "parent": {
+                                                "name": "LlamaExecutor",
+                                                "source_mapping": {
+                                                    "ending_column": 2,
+                                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                                    "filename_relative": "foo.sol",
+                                                    "filename_short": "foo.sol",
+                                                    "is_dependency": false,
+                                                    "length": 1467,
+                                                    "lines": [
+                                                        7,
+                                                        8,
+                                                        9,
+                                                        10,
+                                                        11,
+                                                        12,
+                                                        13,
+                                                        14,
+                                                        15,
+                                                        16,
+                                                        17,
+                                                        18,
+                                                        19,
+                                                        20,
+                                                        21,
+                                                        22,
+                                                        23,
+                                                        24,
+                                                        25,
+                                                        26,
+                                                        27,
+                                                        28,
+                                                        29,
+                                                        30,
+                                                        31,
+                                                        32,
+                                                        33,
+                                                        34,
+                                                        35,
+                                                        36
+                                                    ],
+                                                    "start": 231,
+                                                    "starting_column": 1
+                                                },
+                                                "type": "contract"
+                                            },
+                                            "signature": "execute(address,uint256,bool,bytes)"
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "first_markdown_element": "foo.sol#L29-L35",
+                        "id": "024c5d46b569bdfb774257878d4830fb08ed8d5bbe800ef32fc2fe58209bd744",
+                        "impact": "Informational",
+                        "markdown": "Low level call in [LlamaExecutor.execute(address,uint256,bool,bytes)](foo.sol#L29-L35):\n\t- [(success,result) = target.delegatecall(data)](foo.sol#L34)\n\t- [(success,result) = target.call{value: value}(data)](foo.sol#L34)\n"
+                    },
+                    {
+                        "check": "naming-convention",
+                        "confidence": "High",
+                        "description": "Variable LlamaPolicyMetadataParamRegistry.LLAMA_FACTORY (foo.sol#76) is not in mixedCase\n",
+                        "elements": [
+                            {
+                                "additional_fields": {
+                                    "convention": "mixedCase",
+                                    "target": "variable"
+                                },
+                                "name": "LLAMA_FACTORY",
+                                "source_mapping": {
+                                    "ending_column": 41,
+                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                    "filename_relative": "foo.sol",
+                                    "filename_short": "foo.sol",
+                                    "is_dependency": false,
+                                    "length": 38,
+                                    "lines": [
+                                        76
+                                    ],
+                                    "start": 3238,
+                                    "starting_column": 3
+                                },
+                                "type": "variable",
+                                "type_specific_fields": {
+                                    "parent": {
+                                        "name": "LlamaPolicyMetadataParamRegistry",
+                                        "source_mapping": {
+                                            "ending_column": 2,
+                                            "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                            "filename_relative": "foo.sol",
+                                            "filename_short": "foo.sol",
+                                            "is_dependency": false,
+                                            "length": 5593,
+                                            "lines": [
+                                                41,
+                                                42,
+                                                43,
+                                                44,
+                                                45,
+                                                46,
+                                                47,
+                                                48,
+                                                49,
+                                                50,
+                                                51,
+                                                52,
+                                                53,
+                                                54,
+                                                55,
+                                                56,
+                                                57,
+                                                58,
+                                                59,
+                                                60,
+                                                61,
+                                                62,
+                                                63,
+                                                64,
+                                                65,
+                                                66,
+                                                67,
+                                                68,
+                                                69,
+                                                70,
+                                                71,
+                                                72,
+                                                73,
+                                                74,
+                                                75,
+                                                76,
+                                                77,
+                                                78,
+                                                79,
+                                                80,
+                                                81,
+                                                82,
+                                                83,
+                                                84,
+                                                85,
+                                                86,
+                                                87,
+                                                88,
+                                                89,
+                                                90,
+                                                91,
+                                                92,
+                                                93,
+                                                94,
+                                                95,
+                                                96,
+                                                97,
+                                                98,
+                                                99,
+                                                100,
+                                                101,
+                                                102,
+                                                103,
+                                                104,
+                                                105,
+                                                106,
+                                                107,
+                                                108,
+                                                109,
+                                                110,
+                                                111,
+                                                112,
+                                                113,
+                                                114,
+                                                115,
+                                                116,
+                                                117,
+                                                118,
+                                                119,
+                                                120,
+                                                121,
+                                                122,
+                                                123,
+                                                124,
+                                                125,
+                                                126
+                                            ],
+                                            "start": 1872,
+                                            "starting_column": 1
+                                        },
+                                        "type": "contract"
+                                    }
+                                }
+                            }
+                        ],
+                        "first_markdown_element": "foo.sol#L76",
+                        "id": "7f443b6cf4c5b68ff73bb6a97b6c394d006c38665dd8b4d7bf79d3c31d491ebe",
+                        "impact": "Informational",
+                        "markdown": "Variable [LlamaPolicyMetadataParamRegistry.LLAMA_FACTORY](foo.sol#L76) is not in mixedCase\n"
+                    },
+                    {
+                        "check": "naming-convention",
+                        "confidence": "High",
+                        "description": "Parameter LlamaPolicyMetadataParamRegistry.setLogo(LlamaExecutor,string)._logo (foo.sol#122) is not in mixedCase\n",
+                        "elements": [
+                            {
+                                "additional_fields": {
+                                    "convention": "mixedCase",
+                                    "target": "parameter"
+                                },
+                                "name": "_logo",
+                                "source_mapping": {
+                                    "ending_column": 68,
+                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                    "filename_relative": "foo.sol",
+                                    "filename_short": "foo.sol",
+                                    "is_dependency": false,
+                                    "length": 19,
+                                    "lines": [
+                                        122
+                                    ],
+                                    "start": 7327,
+                                    "starting_column": 49
+                                },
+                                "type": "variable",
+                                "type_specific_fields": {
+                                    "parent": {
+                                        "name": "setLogo",
+                                        "source_mapping": {
+                                            "ending_column": 4,
+                                            "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                            "filename_relative": "foo.sol",
+                                            "filename_short": "foo.sol",
+                                            "is_dependency": false,
+                                            "length": 182,
+                                            "lines": [
+                                                122,
+                                                123,
+                                                124,
+                                                125
+                                            ],
+                                            "start": 7281,
+                                            "starting_column": 3
+                                        },
+                                        "type": "function",
+                                        "type_specific_fields": {
+                                            "parent": {
+                                                "name": "LlamaPolicyMetadataParamRegistry",
+                                                "source_mapping": {
+                                                    "ending_column": 2,
+                                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                                    "filename_relative": "foo.sol",
+                                                    "filename_short": "foo.sol",
+                                                    "is_dependency": false,
+                                                    "length": 5593,
+                                                    "lines": [
+                                                        41,
+                                                        42,
+                                                        43,
+                                                        44,
+                                                        45,
+                                                        46,
+                                                        47,
+                                                        48,
+                                                        49,
+                                                        50,
+                                                        51,
+                                                        52,
+                                                        53,
+                                                        54,
+                                                        55,
+                                                        56,
+                                                        57,
+                                                        58,
+                                                        59,
+                                                        60,
+                                                        61,
+                                                        62,
+                                                        63,
+                                                        64,
+                                                        65,
+                                                        66,
+                                                        67,
+                                                        68,
+                                                        69,
+                                                        70,
+                                                        71,
+                                                        72,
+                                                        73,
+                                                        74,
+                                                        75,
+                                                        76,
+                                                        77,
+                                                        78,
+                                                        79,
+                                                        80,
+                                                        81,
+                                                        82,
+                                                        83,
+                                                        84,
+                                                        85,
+                                                        86,
+                                                        87,
+                                                        88,
+                                                        89,
+                                                        90,
+                                                        91,
+                                                        92,
+                                                        93,
+                                                        94,
+                                                        95,
+                                                        96,
+                                                        97,
+                                                        98,
+                                                        99,
+                                                        100,
+                                                        101,
+                                                        102,
+                                                        103,
+                                                        104,
+                                                        105,
+                                                        106,
+                                                        107,
+                                                        108,
+                                                        109,
+                                                        110,
+                                                        111,
+                                                        112,
+                                                        113,
+                                                        114,
+                                                        115,
+                                                        116,
+                                                        117,
+                                                        118,
+                                                        119,
+                                                        120,
+                                                        121,
+                                                        122,
+                                                        123,
+                                                        124,
+                                                        125,
+                                                        126
+                                                    ],
+                                                    "start": 1872,
+                                                    "starting_column": 1
+                                                },
+                                                "type": "contract"
+                                            },
+                                            "signature": "setLogo(LlamaExecutor,string)"
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "first_markdown_element": "foo.sol#L122",
+                        "id": "c10fa8371518010513eae8ff35760c7adf3fe1909d27cf27a7b0772f0161c944",
+                        "impact": "Informational",
+                        "markdown": "Parameter [LlamaPolicyMetadataParamRegistry.setLogo(LlamaExecutor,string)._logo](foo.sol#L122) is not in mixedCase\n"
+                    },
+                    {
+                        "check": "naming-convention",
+                        "confidence": "High",
+                        "description": "Variable LlamaExecutor.LLAMA_CORE (foo.sol#12) is not in mixedCase\n",
+                        "elements": [
+                            {
+                                "additional_fields": {
+                                    "convention": "mixedCase",
+                                    "target": "variable"
+                                },
+                                "name": "LLAMA_CORE",
+                                "source_mapping": {
+                                    "ending_column": 38,
+                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                    "filename_relative": "foo.sol",
+                                    "filename_short": "foo.sol",
+                                    "is_dependency": false,
+                                    "length": 35,
+                                    "lines": [
+                                        12
+                                    ],
+                                    "start": 403,
+                                    "starting_column": 3
+                                },
+                                "type": "variable",
+                                "type_specific_fields": {
+                                    "parent": {
+                                        "name": "LlamaExecutor",
+                                        "source_mapping": {
+                                            "ending_column": 2,
+                                            "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                            "filename_relative": "foo.sol",
+                                            "filename_short": "foo.sol",
+                                            "is_dependency": false,
+                                            "length": 1467,
+                                            "lines": [
+                                                7,
+                                                8,
+                                                9,
+                                                10,
+                                                11,
+                                                12,
+                                                13,
+                                                14,
+                                                15,
+                                                16,
+                                                17,
+                                                18,
+                                                19,
+                                                20,
+                                                21,
+                                                22,
+                                                23,
+                                                24,
+                                                25,
+                                                26,
+                                                27,
+                                                28,
+                                                29,
+                                                30,
+                                                31,
+                                                32,
+                                                33,
+                                                34,
+                                                35,
+                                                36
+                                            ],
+                                            "start": 231,
+                                            "starting_column": 1
+                                        },
+                                        "type": "contract"
+                                    }
+                                }
+                            }
+                        ],
+                        "first_markdown_element": "foo.sol#L12",
+                        "id": "cd4c4c04238ec55dd6955aa3139dbf2c9cf4a452ecf23923b093d55262eb1e6e",
+                        "impact": "Informational",
+                        "markdown": "Variable [LlamaExecutor.LLAMA_CORE](foo.sol#L12) is not in mixedCase\n"
+                    },
+                    {
+                        "check": "naming-convention",
+                        "confidence": "High",
+                        "description": "Parameter LlamaPolicyMetadataParamRegistry.setColor(LlamaExecutor,string)._color (foo.sol#114) is not in mixedCase\n",
+                        "elements": [
+                            {
+                                "additional_fields": {
+                                    "convention": "mixedCase",
+                                    "target": "parameter"
+                                },
+                                "name": "_color",
+                                "source_mapping": {
+                                    "ending_column": 70,
+                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                    "filename_relative": "foo.sol",
+                                    "filename_short": "foo.sol",
+                                    "is_dependency": false,
+                                    "length": 20,
+                                    "lines": [
+                                        114
+                                    ],
+                                    "start": 6992,
+                                    "starting_column": 50
+                                },
+                                "type": "variable",
+                                "type_specific_fields": {
+                                    "parent": {
+                                        "name": "setColor",
+                                        "source_mapping": {
+                                            "ending_column": 4,
+                                            "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                            "filename_relative": "foo.sol",
+                                            "filename_short": "foo.sol",
+                                            "is_dependency": false,
+                                            "length": 188,
+                                            "lines": [
+                                                114,
+                                                115,
+                                                116,
+                                                117
+                                            ],
+                                            "start": 6945,
+                                            "starting_column": 3
+                                        },
+                                        "type": "function",
+                                        "type_specific_fields": {
+                                            "parent": {
+                                                "name": "LlamaPolicyMetadataParamRegistry",
+                                                "source_mapping": {
+                                                    "ending_column": 2,
+                                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                                    "filename_relative": "foo.sol",
+                                                    "filename_short": "foo.sol",
+                                                    "is_dependency": false,
+                                                    "length": 5593,
+                                                    "lines": [
+                                                        41,
+                                                        42,
+                                                        43,
+                                                        44,
+                                                        45,
+                                                        46,
+                                                        47,
+                                                        48,
+                                                        49,
+                                                        50,
+                                                        51,
+                                                        52,
+                                                        53,
+                                                        54,
+                                                        55,
+                                                        56,
+                                                        57,
+                                                        58,
+                                                        59,
+                                                        60,
+                                                        61,
+                                                        62,
+                                                        63,
+                                                        64,
+                                                        65,
+                                                        66,
+                                                        67,
+                                                        68,
+                                                        69,
+                                                        70,
+                                                        71,
+                                                        72,
+                                                        73,
+                                                        74,
+                                                        75,
+                                                        76,
+                                                        77,
+                                                        78,
+                                                        79,
+                                                        80,
+                                                        81,
+                                                        82,
+                                                        83,
+                                                        84,
+                                                        85,
+                                                        86,
+                                                        87,
+                                                        88,
+                                                        89,
+                                                        90,
+                                                        91,
+                                                        92,
+                                                        93,
+                                                        94,
+                                                        95,
+                                                        96,
+                                                        97,
+                                                        98,
+                                                        99,
+                                                        100,
+                                                        101,
+                                                        102,
+                                                        103,
+                                                        104,
+                                                        105,
+                                                        106,
+                                                        107,
+                                                        108,
+                                                        109,
+                                                        110,
+                                                        111,
+                                                        112,
+                                                        113,
+                                                        114,
+                                                        115,
+                                                        116,
+                                                        117,
+                                                        118,
+                                                        119,
+                                                        120,
+                                                        121,
+                                                        122,
+                                                        123,
+                                                        124,
+                                                        125,
+                                                        126
+                                                    ],
+                                                    "start": 1872,
+                                                    "starting_column": 1
+                                                },
+                                                "type": "contract"
+                                            },
+                                            "signature": "setColor(LlamaExecutor,string)"
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "first_markdown_element": "foo.sol#L114",
+                        "id": "d00824feb4670e34ba27e0b40a58740ca8a9c24006026f65f9c5d12bb08853ba",
+                        "impact": "Informational",
+                        "markdown": "Parameter [LlamaPolicyMetadataParamRegistry.setColor(LlamaExecutor,string)._color](foo.sol#L114) is not in mixedCase\n"
+                    },
+                    {
+                        "check": "naming-convention",
+                        "confidence": "High",
+                        "description": "Variable LlamaPolicyMetadataParamRegistry.ROOT_LLAMA_EXECUTOR (foo.sol#73) is not in mixedCase\n",
+                        "elements": [
+                            {
+                                "additional_fields": {
+                                    "convention": "mixedCase",
+                                    "target": "variable"
+                                },
+                                "name": "ROOT_LLAMA_EXECUTOR",
+                                "source_mapping": {
+                                    "ending_column": 53,
+                                    "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                    "filename_relative": "foo.sol",
+                                    "filename_short": "foo.sol",
+                                    "is_dependency": false,
+                                    "length": 50,
+                                    "lines": [
+                                        73
+                                    ],
+                                    "start": 3150,
+                                    "starting_column": 3
+                                },
+                                "type": "variable",
+                                "type_specific_fields": {
+                                    "parent": {
+                                        "name": "LlamaPolicyMetadataParamRegistry",
+                                        "source_mapping": {
+                                            "ending_column": 2,
+                                            "filename_absolute": "/home/SmartContractAnalysis/foo/foo.sol",
+                                            "filename_relative": "foo.sol",
+                                            "filename_short": "foo.sol",
+                                            "is_dependency": false,
+                                            "length": 5593,
+                                            "lines": [
+                                                41,
+                                                42,
+                                                43,
+                                                44,
+                                                45,
+                                                46,
+                                                47,
+                                                48,
+                                                49,
+                                                50,
+                                                51,
+                                                52,
+                                                53,
+                                                54,
+                                                55,
+                                                56,
+                                                57,
+                                                58,
+                                                59,
+                                                60,
+                                                61,
+                                                62,
+                                                63,
+                                                64,
+                                                65,
+                                                66,
+                                                67,
+                                                68,
+                                                69,
+                                                70,
+                                                71,
+                                                72,
+                                                73,
+                                                74,
+                                                75,
+                                                76,
+                                                77,
+                                                78,
+                                                79,
+                                                80,
+                                                81,
+                                                82,
+                                                83,
+                                                84,
+                                                85,
+                                                86,
+                                                87,
+                                                88,
+                                                89,
+                                                90,
+                                                91,
+                                                92,
+                                                93,
+                                                94,
+                                                95,
+                                                96,
+                                                97,
+                                                98,
+                                                99,
+                                                100,
+                                                101,
+                                                102,
+                                                103,
+                                                104,
+                                                105,
+                                                106,
+                                                107,
+                                                108,
+                                                109,
+                                                110,
+                                                111,
+                                                112,
+                                                113,
+                                                114,
+                                                115,
+                                                116,
+                                                117,
+                                                118,
+                                                119,
+                                                120,
+                                                121,
+                                                122,
+                                                123,
+                                                124,
+                                                125,
+                                                126
+                                            ],
+                                            "start": 1872,
+                                            "starting_column": 1
+                                        },
+                                        "type": "contract"
+                                    }
+                                }
+                            }
+                        ],
+                        "first_markdown_element": "foo.sol#L73",
+                        "id": "f8300ea067cae2ddfdc0b569b43354d7eeb4bd4bd946c9cf7ff6ce6882c273e1",
+                        "impact": "Informational",
+                        "markdown": "Variable [LlamaPolicyMetadataParamRegistry.ROOT_LLAMA_EXECUTOR](foo.sol#L73) is not in mixedCase\n"
+                    }
+                ],
+                "Tool": "Slither"
+            }
+        ],
+        "vulnerabilities_in_fixed": []
+    }
+}

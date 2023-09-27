@@ -35,6 +35,10 @@
 |                         | SLOC | analysis duration (s) | High | Medium | Low | valid finds |
 |:-----------------------:|:----:|:---------------------:|:----:|:------:|:---:|:-----------:|
 | JBXBuybackDelegate.json | 160  |         11.38         |  3   |   10   |  4  |     1H      |
+|         OVERALL         | 160  |         11.38         |  3   |   10   |  4  |     1H      |
+|   UNIQUE VALID FINDS    |      |                       |      |        |     |     1M      |
+
+High unique find was report as Medium in [bot report - M03](https://gist.github.com/itsmetechjay/2efc963de59bcad62e69de48171d10ca#m03-return-values-of-transfertransferfrom-not-checked)
 
 ## Valid finds
 ### High
@@ -46,6 +50,11 @@ Reported as medium in [bot report - M03](https://gist.github.com/itsmetechjay/2e
 |                    | SLOC | High | Medium | Low | valid finds |
 |:------------------:|:----:|:----:|:------:|:---:|:-----------:|
 | JBXBuybackDelegate | 160  |  0   |   2    | 391 |    2M 1L    |
+|      OVERALL       | 160  |  0   |   2    | 391 |    2M 1L    |
+| UNIQUE VALID FINDS |      |      |        |     |     1L      |
+
+Medium unique find was report as Low
+Low unique find was report as not critical 
 
 
 ## Valid finds

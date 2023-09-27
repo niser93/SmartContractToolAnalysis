@@ -56,12 +56,15 @@
 
 
 # SLITHER REPORT
-|              | SLOC | analysis duration (s) | High | Medium | Low | valid finds |
-|:------------:|:----:|:---------------------:|:----:|:------:|:---:|:-----------:|
-|  Reth.json   | 169  |         3.03          |  0   |   5    |  1  |     1M      |
-| SafEth.json  | 156  |         5.66          |  2   |   5    | 16  |     3L      |
-| SfrxEth.json |  81  |         2.58          |  0   |   7    |  1  |     1M      |
-| WstEth.json  |  54  |         2.98          |  0   |   6    |  1  |      0      |
+
+|                    | SLOC | analysis duration (s) | High | Medium | Low | valid finds |
+|:------------------:|:----:|:---------------------:|:----:|:------:|:---:|:-----------:|
+|     Reth.json      | 169  |         3.03          |  0   |   5    |  1  |     1M      |
+|    SafEth.json     | 156  |         5.66          |  2   |   5    | 16  |     4L      |
+|    SfrxEth.json    |  81  |         2.58          |  0   |   7    |  1  |     1M      |
+|    WstEth.json     |  54  |         2.98          |  0   |   6    |  1  |      0      |
+|      OVERALL       | 460  |         14.25         |  2   |   23   | 19  |    2M 4L    |
+| UNIQUE VALID FINDS |      |                       |      |        |     |    1M 2L    |
 
 ## Valid finds
 ### Medium
@@ -80,13 +83,14 @@ in SafEth.sol (3x)
 
 
 # SMARTCHECK REPORT
-|             | SLOC | High | Medium | Low | valid finds |
-|:-----------:|:----:|:----:|:------:|:---:|:-----------:|
-|  Reth.sol   | 169  |  1   |   2    | 36  |    2M 5L    |
-| SafEth.sol  | 156  |  1   |   7    | 41  |    5M 1L    |
-| SfrxEth.sol |  81  |  1   |   2    | 24  |    2M 5L    |
-| WstEth.sol  |  54  |  1   |   2    | 34  |    2M 4L    |
-
+|                    | SLOC | High | Medium | Low | valid finds |
+|:------------------:|:----:|:----:|:------:|:---:|:-----------:|
+|      Reth.sol      | 169  |  1   |   2    | 36  |    2M 5L    |
+|     SafEth.sol     | 156  |  1   |   7    | 41  |    5M 1L    |
+|    SfrxEth.sol     |  81  |  1   |   2    | 24  |    2M 5L    |
+|     WstEth.sol     |  54  |  1   |   2    | 34  |    1M 4L    |
+|      OVERALL       | 460  |  4   |   13   | 135 |   10M 15L   |
+| UNIQUE VALID FINDS |      |      |        |     |    2M 2L    |
 
 ## Valid finds
 ### Medium

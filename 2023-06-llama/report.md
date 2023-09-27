@@ -29,31 +29,57 @@
 | experiment 5 | weighted-random |   1000    |  86400  | [experiment_5/_description.md](experiment_5/_description.md) |
 | experiment 6 |     pending     |    500    |  86400  | [experiment_6/_description.md](experiment_6/_description.md) |
 
-|                           | SLOC | analysis duration (s) | analysis duration (m) | timeout (Y/N) |   High    | Medium | Low | valid finds |
-|:--------------------------|:----:|:---------------------:|:---------------------:|:-------------:|:---------:|:------:|:---:|:-----------:|
-| experiment 1              | 160  |         2578          |          43           |               | 0 (0 IAB) |   0    |  0  |      0      |
-| experiment 2              | 160  |         3079          |          51           |               | 0 (0 IAB) |   0    |  0  |      0      |
-| experiment 3              | 160  |         2613          |          44           |               | 0 (0 IAB) |   0    |  0  |      0      |
-| experiment 4              | 160  |         2812          |          47           |               | 0 (0 IAB) |   0    |  0  |      0      |
-| experiment 5              | 160  |         2191          |          37           |               | 0 (0 IAB) |   0    |  0  |      0      |
-| experiment 6              | 160  |         2007          |          33           |               | 0 (0 IAB) |   0    |  0  |      0      |
-| Unique finds and averages | 160  |         2547          |          43           |               | 0 (0 IAB) |   0    |  0  |      0      | 
+|                           | SLOC | analysis duration (s) | analysis duration (m) | timeout (Y/N) |    High     | Medium | Low | valid finds |
+|:--------------------------|:----:|:---------------------:|:---------------------:|:-------------:|:-----------:|:------:|:---:|:-----------:|
+| experiment 1              | 1572 |         28989         |          483          |               | 11 (11 IAB) |   2    | 13  |      0      |
+| experiment 2              | 1572 |         83746         |         1396          |               | 13 (13 IAB) |   2    | 14  |      0      |
+| experiment 3              | 1572 |         31195         |          520          |               | 12 (12 IAB) |   2    | 14  |      0      |
+| experiment 4              | 1572 |         67246         |         1121          |               | 13 (13 IAB) |   2    | 14  |      0      |
+| experiment 5              | 1572 |         86272         |         1438          |               | 13 (13 IAB) |   2    | 14  |      0      |
+| experiment 6              | 1572 |         71342         |         1189          |               | 13 (13 IAB) |   2    | 14  |      0      |
+| Unique finds and averages | 1572 |         61465         |         1026          |               | 13 (13 IAB) |   2    | 14  |      0      |
+
+# SLITHER REPORT
+
+|                                       | SLOC | analysis duration (s) | High | Medium | Low | valid finds |
+|:-------------------------------------:|:----:|:---------------------:|:----:|:------:|:---:|:-----------:|
+|     LlamaAbsolutePeerReview.json      |  42  |         10.44         |  5   |   17   | 25  |      0      |
+|       LlamaAbsoluteQuorum.json        |  38  |         10.39         |  5   |   17   | 25  |      0      |
+|           LlamaAccount.json           | 187  |         10.39         |  6   |   18   | 32  |      0      |
+|            LlamaCore.json             | 448  |         9.12          |  5   |   16   | 23  |      0      |
+|          LlamaExecutor.json           |  15  |         1.74          |  1   |   0    |  1  |      0      |
+|           LlamaFactory.json           | 157  |         9.11          |  5   |   16   | 23  |      0      |
+|      LlamaGovernanceScript.json       | 161  |         9.81          |  5   |   16   | 29  |      0      |
+|           LlamaPolicy.json            | 260  |         9.18          |  5   |   16   | 23  |      0      |
+|       LlamaPolicyMetadata.json        |  75  |         4.44          |  4   |   3    |  0  |      0      |
+| LlamaPolicyMetadataParamRegistry.json |  38  |         1.83          |  1   |   0    |  1  |      0      |
+|       LlamaRelativeQuorum.json        | 151  |         10.19         |  5   |   17   | 25  |      0      |
+|                OVERALL                | 1572 |         86.64         |  47  |  136   | 207 |      0      |
+|          UNIQUE VALID FINDS           |      |                       |      |        |     |      0      |
 
 
-|                                      | analysis duration (s) | analysis duration (m) | timeout (Y/N) |   High    | Medium | Low | valid finds |
-|:------------------------------------:|:---------------------:|:---------------------:|:-------------:|:---------:|:------:|:---:|:-----------:|
-|     LlamaAbsolutePeerReview.sol      |         5320          |          89           |       N       | 6 (6 IAB) |   0    |  4  |      0      |          
-|       LlamaAbsoluteQuorum.sol        |         5299          |          88           |       N       |     0     |   0    |  4  |      0      |  
-|           LlamaAccount.sol           |          614          |          10           |       N       | 1 (1 IAB) |   0    |  0  |      0      |       
-|            LlamaCore.sol             |         4878          |          81           |       N       | 1 (1 IAB) |   0    |  0  |      0      |          
-|          LlamaExecutor.sol           |          113          |           2           |       N       |     0     |   2    |  1  |      0      |          
-|           LlamaFactory.sol           |           4           |           0           |       N       |     0     |   0    |  0  |      0      |   
-|      LlamaGovernanceScript.sol       |          189          |           3           |       N       |     0     |   0    |  0  |      0      |
-|           LlamaPolicy.sol            |           3           |           0           |       N       |     0     |   0    |  0  |      0      |          
-|       LlamaPolicyMetadata.sol        |          68           |           1           |       N       |     0     |   0    |  0  |      0      |          
-| LlamaPolicyMetadataParamRegistry.sol |          510          |           8           |       N       |     0     |   0    |  0  |      0      |          
-|       LlamaRelativeQuorum.sol        |         11991         |          200          |       N       | 3 (3 IAB) |   0    |  4  |      0      |      
+## Valid finds
+Many finds are valid, but we consider all of them as not-critical
 
+# SMARTCHECK REPORT
+|                                  | SLOC | High | Medium | Low  | valid finds |
+|:--------------------------------:|:----:|:----:|:------:|:----:|:-----------:|
+|     LlamaAbsolutePeerReview      |  42  |  1   |   3    | 279  |      0      |
+|       LlamaAbsoluteQuorum        |  38  |  1   |   3    | 277  |      0      |
+|           LlamaAccount           | 187  |  4   |   1    | 277  |      0      |
+|            LlamaCore             | 448  |  1   |   1    | 235  |      0      |
+|          LlamaExecutor           |  15  |  1   |   0    |  4   |      0      |
+|           LlamaFactory           | 157  |  1   |   1    | 235  |      0      |
+|      LlamaGovernanceScript       | 161  |  2   |   2    | 253  |      0      |
+|           LlamaPolicy            | 260  |  1   |   1    | 235  |      0      |
+|       LlamaPolicyMetadata        |  75  |  0   |   1    |  98  |      0      |
+| LlamaPolicyMetadataParamRegistry |  38  |  1   |   0    |  8   |      0      |
+|       LlamaRelativeQuorum        | 151  |  1   |   3    | 273  |      0      |
+|             OVERALL              | 1572 |  14  |   16   | 2174 |      0      |
+|        UNIQUE VALID FINDS        |      |      |        |      |      0      |
+
+## Valid finds
+Many finds are valid, but we consider all of them as not-critical
 
 # BOT REPORT
 

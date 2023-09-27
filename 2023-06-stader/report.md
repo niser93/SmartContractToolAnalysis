@@ -313,13 +313,16 @@ Anyway, there is a SWC:
 |      ValidatorStatus.json       |  9   |         1.74          |  0   |   0    |  0  |      0      |
 |  ValidatorWithdrawalVault.json  | 125  |         3.47          |  1   |   19   |  4  |     1L      |
 |        VaultFactory.json        |  77  |         4.45          |  1   |   18   |  4  |     2L      |
-|         VaultProxy.json         |  56  |         2.51          |  1   |   9    |  1  |   1H, 1L    |
+|         VaultProxy.json         |  56  |         2.51          |  1   |   9    |  1  |    1H 1L    |
+|             OVERALL             | 4343 |        106.56         |  13  |  463   | 90  |    1H 8L    |
+|       UNIQUE VALID FINDS        |      |                       |      |        |     |    1H 1L    |
 
 ## Valid finds
 ### High
 #### controlled-delegatecall
 Reported as high in [[H-01] VaultProxy implementation can be initialized by anyone and self-destructed](https://github.com/code-423n4/2023-06-stader-findings/issues/418)
 Find in VaultProxy.sol
+
 ### Low
 #### reentrancy-events
 Reported as not-critical in [Bot report - N-12](https://gist.github.com/CloudEllie/9a06bd326750de18279979886ed93ffd#n12-events-may-be-emitted-out-of-order-due-to-reentrancy)
@@ -328,33 +331,38 @@ Find in UserWithdrawalManager.sol
 Reported as low in [Bot report - L-03](https://gist.github.com/CloudEllie/9a06bd326750de18279979886ed93ffd#l03-missing-checks-for-address0x0-when-assigning-values-to-address-state-variables)
 Finds in Penalty.sol (x2), SocializingPool.sol, ValidatorWithdrawalVault.sol, VaultFactory.sol (x2), VaultProxy.sol
 
+### Other finds
+Other finds are valid, but we consider them as not-critical
+
 
 # SMARTCHECK REPORT
-|                            | SLOC | High | Medium | Low | valid finds |
-|:--------------------------:|:----:|:----:|:------:|:---:|:-----------:|
-|          Auction           | 116  |  0   |   0    | 173 |      0      |
-|            ETHx            |  50  |  0   |   1    | 140 |      0      |
-|     NodeELRewardVault      |  32  |  0   |   0    | 122 |      0      |
-|  OperatorRewardsCollector  |  39  |  2   |   0    | 130 |      0      |
-|          Penalty           | 106  |  0   |   1    | 206 |      0      |
-|  PermissionedNodeRegistry  | 524  |  1   |   1    | 180 |      0      |
-|      PermissionedPool      | 252  |  0   |   0    | 184 |      0      |
-| PermissionlessNodeRegistry | 502  |  0   |   0    | 197 |      0      |
-|     PermissionlessPool     | 216  |  0   |   0    | 182 |      0      |
-|        PoolSelector        | 108  |  0   |   2    | 146 |      0      |
-|         PoolUtils          | 232  |  0   |   1    | 143 |      0      |
-|        SDCollateral        | 172  |  0   |   0    | 243 |      0      |
-|      SocializingPool       | 180  |  0   |   2    | 212 |      0      |
-|        StaderConfig        | 374  |  0   |   0    | 133 |      0      |
-|    StaderInsuranceFund     |  52  |  1   |   0    | 138 |      0      |
-|        StaderOracle        | 589  |  0   |   2    | 228 |      0      |
-|  StaderStakePoolsManager   | 213  |  0   |   1    | 284 |      0      |
-|   UserWithdrawalManager    | 176  |  5   |   1    | 265 |      0      |
-|          UtilLib           | 143  |  0   |   0    | 98  |      0      |
-|      ValidatorStatus       |  9   |  0   |   0    |  0  |      0      |
-|  ValidatorWithdrawalVault  | 125  |  1   |   0    | 150 |      0      |
-|        VaultFactory        |  77  |  1   |   0    | 147 |      0      |
-|         VaultProxy         |  56  |  1   |   0    | 109 |    1H 1L    |
+|                            | SLOC | High | Medium | Low  | valid finds |
+|:--------------------------:|:----:|:----:|:------:|:----:|:-----------:|
+|          Auction           | 116  |  0   |   0    | 173  |      0      |
+|            ETHx            |  50  |  0   |   1    | 140  |      0      |
+|     NodeELRewardVault      |  32  |  0   |   0    | 122  |      0      |
+|  OperatorRewardsCollector  |  39  |  2   |   0    | 130  |      0      |
+|          Penalty           | 106  |  0   |   1    | 206  |      0      |
+|  PermissionedNodeRegistry  | 524  |  1   |   1    | 180  |      0      |
+|      PermissionedPool      | 252  |  0   |   0    | 184  |      0      |
+| PermissionlessNodeRegistry | 502  |  0   |   0    | 197  |      0      |
+|     PermissionlessPool     | 216  |  0   |   0    | 182  |      0      |
+|        PoolSelector        | 108  |  0   |   2    | 146  |      0      |
+|         PoolUtils          | 232  |  0   |   1    | 143  |      0      |
+|        SDCollateral        | 172  |  0   |   0    | 243  |      0      |
+|      SocializingPool       | 180  |  0   |   2    | 212  |      0      |
+|        StaderConfig        | 374  |  0   |   0    | 133  |      0      |
+|    StaderInsuranceFund     |  52  |  1   |   0    | 138  |      0      |
+|        StaderOracle        | 589  |  0   |   2    | 228  |      0      |
+|  StaderStakePoolsManager   | 213  |  0   |   1    | 284  |      0      |
+|   UserWithdrawalManager    | 176  |  5   |   1    | 265  |      0      |
+|          UtilLib           | 143  |  0   |   0    |  98  |      0      |
+|      ValidatorStatus       |  9   |  0   |   0    |  0   |      0      |
+|  ValidatorWithdrawalVault  | 125  |  1   |   0    | 150  |      0      |
+|        VaultFactory        |  77  |  1   |   0    | 147  |      0      |
+|         VaultProxy         |  56  |  1   |   0    | 109  |    1H 1L    |
+|          OVERALL           | 4343 |  12  |   12   | 3810 |    1H 1L    |
+|     UNIQUE VALID FINDS     |      |      |        |      |     1H      |
 
 
 ## Valid finds
