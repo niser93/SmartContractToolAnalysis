@@ -146,7 +146,7 @@ Vulnerability found: Y means
 | M-03 |                  SafEth.sol,                  |             N             |
 | M-04 |                   Reth.sol,                   |             N             |
 | M-05 |       Reth.sol, SafEth.sol, WstEth.sol        |             N             |
-| M-06 | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol |             Y             |
+| M-06 | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol |             N             |
 | M-07 |                  SafEth.sol                   |             N             |
 | M-08 |                   Reth.sol,                   |             N             |
 | M-09 |                   Reth.sol,                   |             N             |
@@ -171,12 +171,12 @@ Vulnerability found: Y means
 ## MEDIUM
 | REF  |                   contract                    | vulnerability found (Y/N) |
 |:----:|:---------------------------------------------:|:-------------------------:|
-| M-01 |             Reth.sol, SfrxEth.sol             |             N             |
+| M-01 |             Reth.sol, SfrxEth.sol             |             Y             |
 | M-02 |            SafEth.sol, SfrxEth.sol            |             N             |
 | M-03 |                  SafEth.sol,                  |             N             |
 | M-04 |                   Reth.sol,                   |             N             |
 | M-05 |       Reth.sol, SafEth.sol, WstEth.sol        |             N             |
-| M-06 | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol |             Y             |
+| M-06 | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol |             N             |
 | M-07 |                  SafEth.sol                   |             N             |
 | M-08 |                   Reth.sol,                   |             N             |
 | M-09 |                   Reth.sol,                   |             N             |
@@ -201,12 +201,12 @@ Vulnerability found: Y means
 ## MEDIUM
 | REF  |                   contract                    | vulnerability found (Y/N) |
 |:----:|:---------------------------------------------:|:-------------------------:|
-| M-01 |             Reth.sol, SfrxEth.sol             |             N             |
+| M-01 |             Reth.sol, SfrxEth.sol             |             Y             |
 | M-02 |            SafEth.sol, SfrxEth.sol            |             N             |
 | M-03 |                  SafEth.sol,                  |             N             |
 | M-04 |                   Reth.sol,                   |             N             |
 | M-05 |       Reth.sol, SafEth.sol, WstEth.sol        |             N             |
-| M-06 | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol |             Y             |
+| M-06 | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol |             N             |
 | M-07 |                  SafEth.sol                   |             N             |
 | M-08 |                   Reth.sol,                   |             N             |
 | M-09 |                   Reth.sol,                   |             N             |
