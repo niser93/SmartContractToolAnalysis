@@ -113,9 +113,55 @@ No high in bot report
 | M-02 |          LlamaCore.sol          |             N             |
 | M-03 |  LlamaPolicy.sol,LlamaCore.sol  |             N             |
 
+## COMPARISON BETWEEN SLITHER REPORT AND WARDEN REPORT
+
+## HIGH
+| REF  |        contract         | vulnerability found (Y/N) |
+|:----:|:-----------------------:|:-------------------------:|
+| H-01 | LlamaRelativeQuorum.sol |             N             |
+| H-02 | LlamaRelativeQuorum.sol |             N             |
+
+## MEDIUM
+| REF  |            contract             | vulnerability found (Y/N) |
+|:----:|:-------------------------------:|:-------------------------:|
+| M-01 | LlamaCore.sol,LlamaExecutor.sol |             N             |
+| M-02 |          LlamaCore.sol          |             N             |
+| M-03 |  LlamaPolicy.sol,LlamaCore.sol  |             N             |
+
+## COMPARISON BETWEEN SMARTCHECK REPORT AND WARDEN REPORT
+
+## HIGH
+| REF  |        contract         | vulnerability found (Y/N) |
+|:----:|:-----------------------:|:-------------------------:|
+| H-01 | LlamaRelativeQuorum.sol |             N             |
+| H-02 | LlamaRelativeQuorum.sol |             N             |
+
+## MEDIUM
+| REF  |            contract             | vulnerability found (Y/N) |
+|:----:|:-------------------------------:|:-------------------------:|
+| M-01 | LlamaCore.sol,LlamaExecutor.sol |             N             |
+| M-02 |          LlamaCore.sol          |             N             |
+| M-03 |  LlamaPolicy.sol,LlamaCore.sol  |             N             |
+
 
 
 ## COMPARISON BETWEEN MYTHRIL REPORT AND BOT REPORT
+
+### MEDIUM
+| REF  |     contract     | vulnerability found (Y/N) |
+|:----:|:----------------:|:-------------------------:|
+| M-01 | LlamaAccount.sol |             N             |
+| M-02 | LlamaPolicy.sol  |             N             |
+
+## COMPARISON BETWEEN SLITHER REPORT AND BOT REPORT
+
+### MEDIUM
+| REF  |     contract     | vulnerability found (Y/N) |
+|:----:|:----------------:|:-------------------------:|
+| M-01 | LlamaAccount.sol |             N             |
+| M-02 | LlamaPolicy.sol  |             N             |
+
+## COMPARISON BETWEEN SMARTCHECK REPORT AND BOT REPORT
 
 ### MEDIUM
 | REF  |     contract     | vulnerability found (Y/N) |

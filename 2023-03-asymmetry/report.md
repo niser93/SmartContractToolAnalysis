@@ -154,6 +154,66 @@ Vulnerability found: Y means
 | M-11 |                  SafEth.sol                   |             N             |
 | M-12 |                  SafEth.sol                   |             N             |
 
+## COMPARISON BETWEEN SLITHER REPORT AND WARDEN REPORT
+
+## HIGH
+| REF  |                    contract                    | vulnerability found (Y/N) |
+|:----:|:----------------------------------------------:|:-------------------------:|
+| H-01 |                   SafEth.sol                   |             N             |
+| H-02 |              SafEth.sol, Reth.sol              |             N             |
+| H-03 |                   SafEth.sol                   |             N             |
+| H-04 |            SafEth.sol, SfrxEth.sol             |             N             |
+| H-05 |                    Reth.sol                    |             N             |
+| H-06 |                   WstEth.sol                   |             N             |
+| H-07 |                    Reth.sol                    |             N             |
+| H-08 | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol  |             N             |
+
+## MEDIUM
+| REF  |                   contract                    | vulnerability found (Y/N) |
+|:----:|:---------------------------------------------:|:-------------------------:|
+| M-01 |             Reth.sol, SfrxEth.sol             |             N             |
+| M-02 |            SafEth.sol, SfrxEth.sol            |             N             |
+| M-03 |                  SafEth.sol,                  |             N             |
+| M-04 |                   Reth.sol,                   |             N             |
+| M-05 |       Reth.sol, SafEth.sol, WstEth.sol        |             N             |
+| M-06 | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol |             Y             |
+| M-07 |                  SafEth.sol                   |             N             |
+| M-08 |                   Reth.sol,                   |             N             |
+| M-09 |                   Reth.sol,                   |             N             |
+| M-10 |                  SafEth.sol                   |             N             |
+| M-11 |                  SafEth.sol                   |             N             |
+| M-12 |                  SafEth.sol                   |             N             |
+
+## COMPARISON BETWEEN SMARTCHECK REPORT AND WARDEN REPORT
+
+## HIGH
+| REF  |                    contract                    | vulnerability found (Y/N) |
+|:----:|:----------------------------------------------:|:-------------------------:|
+| H-01 |                   SafEth.sol                   |             N             |
+| H-02 |              SafEth.sol, Reth.sol              |             N             |
+| H-03 |                   SafEth.sol                   |             N             |
+| H-04 |            SafEth.sol, SfrxEth.sol             |             N             |
+| H-05 |                    Reth.sol                    |             N             |
+| H-06 |                   WstEth.sol                   |             N             |
+| H-07 |                    Reth.sol                    |             N             |
+| H-08 | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol  |             N             |
+
+## MEDIUM
+| REF  |                   contract                    | vulnerability found (Y/N) |
+|:----:|:---------------------------------------------:|:-------------------------:|
+| M-01 |             Reth.sol, SfrxEth.sol             |             N             |
+| M-02 |            SafEth.sol, SfrxEth.sol            |             N             |
+| M-03 |                  SafEth.sol,                  |             N             |
+| M-04 |                   Reth.sol,                   |             N             |
+| M-05 |       Reth.sol, SafEth.sol, WstEth.sol        |             N             |
+| M-06 | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol |             Y             |
+| M-07 |                  SafEth.sol                   |             N             |
+| M-08 |                   Reth.sol,                   |             N             |
+| M-09 |                   Reth.sol,                   |             N             |
+| M-10 |                  SafEth.sol                   |             N             |
+| M-11 |                  SafEth.sol                   |             N             |
+| M-12 |                  SafEth.sol                   |             N             |
+
 
 ## COMPARISON BETWEEN MYTHRIL REPORT AND BOT REPORT
 No high or medium in bot report

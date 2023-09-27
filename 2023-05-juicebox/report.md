@@ -101,7 +101,44 @@ Vulnerability found: Y means
 | M-02 | JBXBuybackDelegate.sol |             N             |
 | M-03 | JBXBuybackDelegate.sol |             N             |
 
+## COMPARISON BETWEEN SLITHER REPORT AND WARDEN REPORT
+
+### MEDIUM
+| REF  |        contract        | vulnerability found (Y/N) |
+|:----:|:----------------------:|:-------------------------:|
+| M-01 | JBXBuybackDelegate.sol |             N             |
+| M-02 | JBXBuybackDelegate.sol |             N             |
+| M-03 | JBXBuybackDelegate.sol |             N             |
+
+
+## COMPARISON BETWEEN SMARTCHECK REPORT AND WARDEN REPORT
+
+### MEDIUM
+| REF  |        contract        | vulnerability found (Y/N) |
+|:----:|:----------------------:|:-------------------------:|
+| M-01 | JBXBuybackDelegate.sol |             N             |
+| M-02 | JBXBuybackDelegate.sol |             N             |
+| M-03 | JBXBuybackDelegate.sol |             N             |
+
 ## COMPARISON BETWEEN MYTHRIL REPORT AND BOT REPORT
+
+### MEDIUM
+| REF  |        contract        | vulnerability found (Y/N) |
+|:----:|:----------------------:|:-------------------------:|
+| M-01 | JBXBuybackDelegate.sol |             N             |
+| M-02 | JBXBuybackDelegate.sol |             N             |
+| M-03 | JBXBuybackDelegate.sol |             N             |
+
+## COMPARISON BETWEEN SLITHER REPORT AND BOT REPORT
+
+### MEDIUM
+| REF  |        contract        | vulnerability found (Y/N) |
+|:----:|:----------------------:|:-------------------------:|
+| M-01 | JBXBuybackDelegate.sol |             N             |
+| M-02 | JBXBuybackDelegate.sol |             N             |
+| M-03 | JBXBuybackDelegate.sol |             Y             |
+
+## COMPARISON BETWEEN SMARTCHECK REPORT AND BOT REPORT
 
 ### MEDIUM
 | REF  |        contract        | vulnerability found (Y/N) |

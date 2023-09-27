@@ -420,7 +420,72 @@ No high in bot report
 | M-14 |                                 StaderOracle.sol                                 |                  N                   |
 
 
+## COMPARISON BETWEEN SLITHER REPORT AND WARDEN REPORT
+
+### HIGH
+|  REF  |    contract    | vulnerability found by Mythril (Y/N) |
+|:-----:|:--------------:|:------------------------------------:|
+| H-01  | VaultProxy.sol |                  Y                   |
+
+### MEDIUM
+| REF  |                                     contract                                     | vulnerability found by Mythril (Y/N) |
+|:----:|:--------------------------------------------------------------------------------:|:------------------------------------:|
+| M-01 |                                 StaderConfig.sol                                 |                  N                   |
+| M-02 | SocializingPool.sol, StaderOracle.sol, OperatorRewardsCollector.sol, Auction.sol |                  N                   |
+| M-03 |                          PermissionlessNodeRegistry.sol                          |                  N                   |
+| M-04 |                                  PoolUtils.sol                                   |                  N                   |
+| M-05 |                                 StaderOracle.sol                                 |                  N                   |
+| M-06 |                           ValidatorWithdrawalVault.sol                           |                  N                   |
+| M-07 |                                   Auction.sol                                    |                  N                   |
+| M-08 |                                 StaderOracle.sol                                 |                  N                   |
+| M-09 |                                 PoolSelector.sol                                 |                  N                   |
+| M-10 |                                  VaultProxy.sol                                  |                  N                   |
+| M-11 |                           ValidatorWithdrawalVault.sol                           |                  N                   |
+| M-12 |                           ValidatorWithdrawalVault.sol                           |                  N                   |
+| M-13 |                                   Auction.sol                                    |                  N                   |
+| M-14 |                                 StaderOracle.sol                                 |                  N                   |
+
+## COMPARISON BETWEEN SMARTCHECK REPORT AND WARDEN REPORT
+
+### HIGH
+|  REF  |    contract    | vulnerability found by Mythril (Y/N) |
+|:-----:|:--------------:|:------------------------------------:|
+| H-01  | VaultProxy.sol |                  Y                   |
+
+### MEDIUM
+| REF  |                                     contract                                     | vulnerability found by Mythril (Y/N) |
+|:----:|:--------------------------------------------------------------------------------:|:------------------------------------:|
+| M-01 |                                 StaderConfig.sol                                 |                  N                   |
+| M-02 | SocializingPool.sol, StaderOracle.sol, OperatorRewardsCollector.sol, Auction.sol |                  N                   |
+| M-03 |                          PermissionlessNodeRegistry.sol                          |                  N                   |
+| M-04 |                                  PoolUtils.sol                                   |                  N                   |
+| M-05 |                                 StaderOracle.sol                                 |                  N                   |
+| M-06 |                           ValidatorWithdrawalVault.sol                           |                  N                   |
+| M-07 |                                   Auction.sol                                    |                  N                   |
+| M-08 |                                 StaderOracle.sol                                 |                  N                   |
+| M-09 |                                 PoolSelector.sol                                 |                  N                   |
+| M-10 |                                  VaultProxy.sol                                  |                  N                   |
+| M-11 |                           ValidatorWithdrawalVault.sol                           |                  N                   |
+| M-12 |                           ValidatorWithdrawalVault.sol                           |                  N                   |
+| M-13 |                                   Auction.sol                                    |                  N                   |
+| M-14 |                                 StaderOracle.sol                                 |                  N                   |
+
+
 ## COMPARISON BETWEEN MYTHRIL REPORT AND BOT REPORT
+
+### MEDIUM
+| REF  |    contract    | vulnerability found  by Mythril(Y/N) |
+|:----:|:--------------:|:------------------------------------:|
+| M-01 | VaultProxy.sol |                  N                   |
+
+## COMPARISON BETWEEN SLITHER REPORT AND BOT REPORT
+
+### MEDIUM
+| REF  |    contract    | vulnerability found  by Mythril(Y/N) |
+|:----:|:--------------:|:------------------------------------:|
+| M-01 | VaultProxy.sol |                  N                   |
+
+## COMPARISON BETWEEN SMARTCHECK REPORT AND BOT REPORT
 
 ### MEDIUM
 | REF  |    contract    | vulnerability found  by Mythril(Y/N) |
