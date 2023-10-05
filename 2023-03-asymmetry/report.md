@@ -55,66 +55,6 @@
 | Unique finds and averages | 460  |         8997          |          150          |               | 0 (0 IAB) |   0    |  3  |      0      |
 
 
-# SLITHER REPORT
-
-|                    | SLOC | analysis duration (s) | High | Medium | Low | valid finds |
-|:------------------:|:----:|:---------------------:|:----:|:------:|:---:|:-----------:|
-|     Reth.json      | 169  |         3.03          |  0   |   5    |  1  |     1M      |
-|    SafEth.json     | 156  |         5.66          |  2   |   5    | 16  |     4L      |
-|    SfrxEth.json    |  81  |         2.58          |  0   |   7    |  1  |     1M      |
-|    WstEth.json     |  54  |         2.98          |  0   |   6    |  1  |      0      |
-|      OVERALL       | 460  |         14.25         |  2   |   23   | 19  |    2M 4L    |
-| UNIQUE VALID FINDS |      |                       |      |        |     |    1M 2L    |
-
-## Valid finds
-### Medium
-#### divide-before-multiply 
-(See [[M-01] Division before multiplication truncate minOut and incurs heavy precision loss and result in insufficient slippage protection](https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1078))
-in Reth.sol and SfrxEth.sol
-
-### Low
-#### shadowing-local 
-(See [[20] Variable shadowing](https://github.com/code-423n4/2023-03-asymmetry-findings/issues/967))
-in SafEth.sol
-
-#### reentrancy-events
-(See [[05] Emit events before external calls](https://github.com/code-423n4/2023-03-asymmetry-findings/issues/967))
-in SafEth.sol (3x)
-
-
-# SMARTCHECK REPORT
-|                    | SLOC | High | Medium | Low | valid finds |
-|:------------------:|:----:|:----:|:------:|:---:|:-----------:|
-|      Reth.sol      | 169  |  1   |   2    | 36  |    2M 5L    |
-|     SafEth.sol     | 156  |  1   |   7    | 41  |    5M 1L    |
-|    SfrxEth.sol     |  81  |  1   |   2    | 24  |    2M 5L    |
-|     WstEth.sol     |  54  |  1   |   2    | 34  |    1M 4L    |
-|      OVERALL       | 460  |  4   |   13   | 135 |   10M 15L   |
-| UNIQUE VALID FINDS |      |      |        |     |    2M 2L    |
-
-## Valid finds
-### Medium
-#### SOLIDITY_DIV_MUL 
-(See [[M-01] Division before multiplication truncate minOut and incurs heavy precision loss and result in insufficient slippage protection](https://github.com/code-423n4/2023-03-asymmetry-findings/issues/1078))
-in Reth.sol and SfrxEth.sol
-
-#### SOLIDITY_OVERPOWERED_ROLE
-This issue was not reported in Warden report neither in bot report.
-Issue is in Reth.sol, SafEth.sol (5x), SfrxEth.sol and WstEth.sol
-
-### Low
-#### SOLIDITY_ADDRESS_HARDCODED
-This issue was not reported in Warden report neither in bot report.
-Issue is in Reth.sol (4x), SfrxEth.sol (4x) and WstEth.sol (3x)
-
-#### SOLIDITY_PRAGMAS_VERSION
-This issue was not reported in Warden report neither in bot report.
-Issue is in Reth.sol, SafEth.sol, SfrxEth.sol and WstEth.sol
-
-### Other finds
-Other finds are valid, but we consider them as not-critical
-
-
 # BOT REPORT
 No high or medium in bot report
 
@@ -142,66 +82,6 @@ Vulnerability found: Y means
 | REF  |                   contract                    | vulnerability found (Y/N) |
 |:----:|:---------------------------------------------:|:-------------------------:|
 | M-01 |             Reth.sol, SfrxEth.sol             |             N             |
-| M-02 |            SafEth.sol, SfrxEth.sol            |             N             |
-| M-03 |                  SafEth.sol,                  |             N             |
-| M-04 |                   Reth.sol,                   |             N             |
-| M-05 |       Reth.sol, SafEth.sol, WstEth.sol        |             N             |
-| M-06 | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol |             N             |
-| M-07 |                  SafEth.sol                   |             N             |
-| M-08 |                   Reth.sol,                   |             N             |
-| M-09 |                   Reth.sol,                   |             N             |
-| M-10 |                  SafEth.sol                   |             N             |
-| M-11 |                  SafEth.sol                   |             N             |
-| M-12 |                  SafEth.sol                   |             N             |
-
-## COMPARISON BETWEEN SLITHER REPORT AND WARDEN REPORT
-
-## HIGH
-| REF  |                    contract                    | vulnerability found (Y/N) |
-|:----:|:----------------------------------------------:|:-------------------------:|
-| H-01 |                   SafEth.sol                   |             N             |
-| H-02 |              SafEth.sol, Reth.sol              |             N             |
-| H-03 |                   SafEth.sol                   |             N             |
-| H-04 |            SafEth.sol, SfrxEth.sol             |             N             |
-| H-05 |                    Reth.sol                    |             N             |
-| H-06 |                   WstEth.sol                   |             N             |
-| H-07 |                    Reth.sol                    |             N             |
-| H-08 | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol  |             N             |
-
-## MEDIUM
-| REF  |                   contract                    | vulnerability found (Y/N) |
-|:----:|:---------------------------------------------:|:-------------------------:|
-| M-01 |             Reth.sol, SfrxEth.sol             |             Y             |
-| M-02 |            SafEth.sol, SfrxEth.sol            |             N             |
-| M-03 |                  SafEth.sol,                  |             N             |
-| M-04 |                   Reth.sol,                   |             N             |
-| M-05 |       Reth.sol, SafEth.sol, WstEth.sol        |             N             |
-| M-06 | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol |             N             |
-| M-07 |                  SafEth.sol                   |             N             |
-| M-08 |                   Reth.sol,                   |             N             |
-| M-09 |                   Reth.sol,                   |             N             |
-| M-10 |                  SafEth.sol                   |             N             |
-| M-11 |                  SafEth.sol                   |             N             |
-| M-12 |                  SafEth.sol                   |             N             |
-
-## COMPARISON BETWEEN SMARTCHECK REPORT AND WARDEN REPORT
-
-## HIGH
-| REF  |                    contract                    | vulnerability found (Y/N) |
-|:----:|:----------------------------------------------:|:-------------------------:|
-| H-01 |                   SafEth.sol                   |             N             |
-| H-02 |              SafEth.sol, Reth.sol              |             N             |
-| H-03 |                   SafEth.sol                   |             N             |
-| H-04 |            SafEth.sol, SfrxEth.sol             |             N             |
-| H-05 |                    Reth.sol                    |             N             |
-| H-06 |                   WstEth.sol                   |             N             |
-| H-07 |                    Reth.sol                    |             N             |
-| H-08 | Reth.sol, SafEth.sol, SfrxEth.sol, WstEth.sol  |             N             |
-
-## MEDIUM
-| REF  |                   contract                    | vulnerability found (Y/N) |
-|:----:|:---------------------------------------------:|:-------------------------:|
-| M-01 |             Reth.sol, SfrxEth.sol             |             Y             |
 | M-02 |            SafEth.sol, SfrxEth.sol            |             N             |
 | M-03 |                  SafEth.sol,                  |             N             |
 | M-04 |                   Reth.sol,                   |             N             |

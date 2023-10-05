@@ -33,27 +33,6 @@ In particular, we set 3 parameters: strategy, max-depth and timeout
 | experiment 5 | weighted-random |   1000    |  86400  |
 | experiment 6 |     pending     |    500    |  86400  |
 
-
-# Slither analysis
-## Description
-Slither is a Solidity static analysis framework written in Python3. It runs a suite of vulnerability detectors, that can be found in
-[detectors](https://github.com/crytic/slither#detectors)
-
-## Experiment description
-We performed experiments on flatten solidity code, i.e. solidity files in which we had substituted imports with whole files.
-
-
-# Smartcheck analysis
-## Description
-SmartCheck is an extensible static analysis tool for discovering vulnerabilities and other code issues in Ethereum smart contracts written in the Solidity programming language.
-SmartCheck is described in the academic paper titled ["SmartCheck: Static Analysis of Ethereum Smart Contracts"](https://hdl.handle.net/10993/35862) as released on May 27, 2018.
-Rule descriptions of vulnerability detectors can be found [there](https://github.com/smartdec/smartcheck/tree/master/rule_descriptions)
-
-## Experiment description
-We performed experiments on flatten solidity code, i.e. solidity files in which we had substituted imports with whole files.
-
-
-
 # Asymmetry
 **Contest**: [2023-03-Asymmetry](https://code4rena.com/contests/2023-03-asymmetry-contest)\
 **Analysis report**: [https://code4rena.com/reports/2023-03-asymmetry](https://code4rena.com/reports/2023-03-asymmetry)\
@@ -74,8 +53,6 @@ We report only valid finds according to [severity criteria of Code4rena](https:/
 |            | High | Medium | Low |
 |:----------:|:----:|:------:|:---:|
 |  Mythril   |  0   |   0    |  3  |
-|  Slither   |  0   |   1    |  2  |
-| Smartcheck |  0   |   2    |  2  |
 
 
 ## Analysis report VS ...
@@ -86,21 +63,6 @@ We report only valid finds according to [severity criteria of Code4rena](https:/
 | Not found by Mythril  |            8            |            11             |
 |        Overall        |            8            |            12             |
 
-### Analysis report VS Slither report
-|                       | High in analysis report | Medium in analysis report |
-|:---------------------:|:-----------------------:|:-------------------------:|
-| Also found by Slither |            0            |             1             |
-| Not found by Slither  |            8            |            11             |
-|        Overall        |            8            |            12             |
-
-### Analysis report VS Smartcheck report
-|                          | High in analysis report | Medium in analysis report |
-|:------------------------:|:-----------------------:|:-------------------------:|
-| Also found by Smartcheck |            0            |             1             |
-| Not found by Smartcheck  |            8            |            11             |
-|         Overall          |            8            |            12             |
-
-1 medium issue was found just by Smartcheck.
 
 ## Bot race winner report VS ...
 ### Bot race winner report VS Mythril report
@@ -110,19 +72,6 @@ We report only valid finds according to [severity criteria of Code4rena](https:/
 | Not found by Mythril  |               0                |                0                 |
 |        Overall        |               0                |                0                 |
 
-### Bot race winner report VS Slither report
-|                       | High in Bot race winner report | Medium in Bot race winner report |
-|:---------------------:|:------------------------------:|:--------------------------------:|
-| Also found by Slither |               0                |                0                 |
-| Not found by Slither  |               0                |                0                 |
-|        Overall        |               0                |                0                 |
-
-### Bot race winner report VS Smartcheck report
-|                          | High in Bot race winner report | Medium in Bot race winner report |
-|:------------------------:|:------------------------------:|:--------------------------------:|
-| Also found by Smartcheck |               0                |                0                 |
-| Not found by Smartcheck  |               0                |                0                 |
-|         Overall          |               0                |                0                 |
 
 
 
@@ -146,8 +95,6 @@ We report only valid finds according to [severity criteria of Code4rena](https:/
 |            | High | Medium | Low |
 |:----------:|:----:|:------:|:---:|
 |  Mythril   |  0   |   0    |  3  |
-|  Slither   |  0   |   1    |  0  |
-| Smartcheck |  0   |   0    |  1  |
 
 
 ## Analysis report VS ...
@@ -158,20 +105,6 @@ We report only valid finds according to [severity criteria of Code4rena](https:/
 | Not found by Mythril  |            0            |             3             |
 |        Overall        |            0            |             3             |
 
-### Analysis report VS Slither report
-|                       | High in analysis report | Medium in analysis report |
-|:---------------------:|:-----------------------:|:-------------------------:|
-| Also found by Slither |            0            |             0             |
-| Not found by Slither  |            0            |             3             |
-|        Overall        |            0            |             3             |
-
-### Analysis report VS Smartcheck report
-|                          | High in analysis report | Medium in analysis report |
-|:------------------------:|:-----------------------:|:-------------------------:|
-| Also found by Smartcheck |            0            |             0             |
-| Not found by Smartcheck  |            0            |             3             |
-|         Overall          |            0            |             3             |
-
 
 ## Bot race winner report VS ...
 ### Bot race winner report VS Mythril report
@@ -180,20 +113,6 @@ We report only valid finds according to [severity criteria of Code4rena](https:/
 | Also found by Mythril |               0                |                0                 |
 | Not found by Mythril  |               0                |                3                 |
 |        Overall        |               0                |                3                 |
-
-### Bot race winner report VS Slither report
-|                       | High in Bot race winner report | Medium in Bot race winner report |
-|:---------------------:|:------------------------------:|:--------------------------------:|
-| Also found by Slither |               0                |                1                 |
-| Not found by Slither  |               0                |                2                 |
-|        Overall        |               0                |                3                 |
-
-### Bot race winner report VS Smartcheck report
-|                          | High in Bot race winner report | Medium in Bot race winner report |
-|:------------------------:|:------------------------------:|:--------------------------------:|
-| Also found by Smartcheck |               0                |                0                 |
-| Not found by Smartcheck  |               0                |                3                 |
-|         Overall          |               0                |                3                 |
 
 
 
@@ -218,8 +137,6 @@ We report only valid finds according to [severity criteria of Code4rena](https:/
 |            | High | Medium | Low |
 |:----------:|:----:|:------:|:---:|
 |  Mythril   |  0   |   0    |  0  |
-|  Slither   |  0   |   0    |  0  |
-| Smartcheck |  0   |   0    |  0  |
 
 
 ## Analysis report VS ...
@@ -230,19 +147,6 @@ We report only valid finds according to [severity criteria of Code4rena](https:/
 | Not found by Mythril  |            2            |             3             |
 |        Overall        |            2            |             3             |
 
-### Analysis report VS Slither report
-|                       | High in analysis report | Medium in analysis report |
-|:---------------------:|:-----------------------:|:-------------------------:|
-| Also found by Slither |            0            |             0             |
-| Not found by Slither  |            2            |             3             |
-|        Overall        |            2            |             3             |
-
-### Analysis report VS Smartcheck report
-|                          | High in analysis report | Medium in analysis report |
-|:------------------------:|:-----------------------:|:-------------------------:|
-| Also found by Smartcheck |            0            |             0             |
-| Not found by Smartcheck  |            2            |             3             |
-|         Overall          |            2            |             3             |
 
 ## Bot race winner report VS ...
 ### Bot race winner report VS Mythril report
@@ -252,19 +156,6 @@ We report only valid finds according to [severity criteria of Code4rena](https:/
 | Not found by Mythril  |               0                |                2                 |
 |        Overall        |               0                |                2                 |
 
-### Bot race winner report VS Slither report
-|                       | High in Bot race winner report | Medium in Bot race winner report |
-|:---------------------:|:------------------------------:|:--------------------------------:|
-| Also found by Slither |               0                |                0                 |
-| Not found by Slither  |               0                |                2                 |
-|        Overall        |               0                |                2                 |
-
-### Bot race winner report VS Smartcheck report
-|                          | High in Bot race winner report | Medium in Bot race winner report |
-|:------------------------:|:------------------------------:|:--------------------------------:|
-| Also found by Smartcheck |               0                |                0                 |
-| Not found by Smartcheck  |               0                |                2                 |
-|         Overall          |               0                |                2                 |
 
 
 
@@ -290,8 +181,6 @@ We report only valid finds according to [severity criteria of Code4rena](https:/
 |            | High | Medium | Low |
 |:----------:|:----:|:------:|:---:|
 |  Mythril   |  1   |   1    |  0  |
-|  Slither   |  1   |   0    |  1  |
-| Smartcheck |  1   |   0    |  0  |
 
 
 ## Analysis report VS ...
@@ -302,19 +191,6 @@ We report only valid finds according to [severity criteria of Code4rena](https:/
 | Not found by Mythril  |            0            |            13             |
 |        Overall        |            1            |            14             |
 
-### Analysis report VS Slither report
-|                       | High in analysis report | Medium in analysis report |
-|:---------------------:|:-----------------------:|:-------------------------:|
-| Also found by Slither |            1            |             0             |
-| Not found by Slither  |            0            |            14             |
-|        Overall        |            1            |            14             |
-
-### Analysis report VS Smartcheck report
-|                          | High in analysis report | Medium in analysis report |
-|:------------------------:|:-----------------------:|:-------------------------:|
-| Also found by Smartcheck |            1            |             0             |
-| Not found by Smartcheck  |            0            |            14             |
-|         Overall          |            1            |            14             |
 
 ## Bot race winner report VS ...
 ### Bot race winner report VS Mythril report
@@ -324,19 +200,6 @@ We report only valid finds according to [severity criteria of Code4rena](https:/
 | Not found by Mythril  |               0                |                1                 |
 |        Overall        |               0                |                1                 |
 
-### Bot race winner report VS Slither report
-|                       | High in Bot race winner report | Medium in Bot race winner report |
-|:---------------------:|:------------------------------:|:--------------------------------:|
-| Also found by Slither |               0                |                0                 |
-| Not found by Slither  |               0                |                1                 |
-|        Overall        |               0                |                1                 |
-
-### Bot race winner report VS Smartcheck report
-|                       | High in Bot race winner report | Medium in Bot race winner report |
-|:---------------------:|:------------------------------:|:--------------------------------:|
-| Also found by Smartcheck |               0                |                0                 |
-| Not found by Smartcheck  |               0                |                1                 |
-|        Overall        |               0                |                1                 |
 
 
 

@@ -29,50 +29,7 @@
 | experiment 4              | 160  |         2812          |          47           |               | 0 (0 IAB) |   0    |  0  |      0      |
 | experiment 5              | 160  |         2191          |          37           |               | 0 (0 IAB) |   0    |  0  |      0      |
 | experiment 6              | 160  |         2007          |          33           |               | 0 (0 IAB) |   0    |  0  |      0      |
-| Unique finds and averages | 160  |         2547          |          43           |               | 0 (0 IAB) |   0    |  0  |      0      | 
-
-# SLITHER REPORT
-|                         | SLOC | analysis duration (s) | High | Medium | Low | valid finds |
-|:-----------------------:|:----:|:---------------------:|:----:|:------:|:---:|:-----------:|
-| JBXBuybackDelegate.json | 160  |         11.38         |  3   |   10   |  4  |     1H      |
-|         OVERALL         | 160  |         11.38         |  3   |   10   |  4  |     1H      |
-|   UNIQUE VALID FINDS    |      |                       |      |        |     |     1M      |
-
-High unique find was report as Medium in [bot report - M03](https://gist.github.com/itsmetechjay/2efc963de59bcad62e69de48171d10ca#m03-return-values-of-transfertransferfrom-not-checked)
-
-## Valid finds
-### High
-#### unchecked-transfer
-Reported as medium in [bot report - M03](https://gist.github.com/itsmetechjay/2efc963de59bcad62e69de48171d10ca#m03-return-values-of-transfertransferfrom-not-checked)
-
-
-# SMARTCHECK REPORT
-|                    | SLOC | High | Medium | Low | valid finds |
-|:------------------:|:----:|:----:|:------:|:---:|:-----------:|
-| JBXBuybackDelegate | 160  |  0   |   2    | 391 |    2M 1L    |
-|      OVERALL       | 160  |  0   |   2    | 391 |    2M 1L    |
-| UNIQUE VALID FINDS |      |      |        |     |     1L      |
-
-Medium unique find was report as Low
-Low unique find was report as not critical 
-
-
-## Valid finds
-### Medium
-#### SOLIDITY_DIV_MUL 
-(See [Bot report: [L‑02] Loss of precision](https://gist.github.com/itsmetechjay/2efc963de59bcad62e69de48171d10ca#l02-loss-of-precision))
-reported as low in bot report
-in JBXBuybackDelegate.sol (2x)
-
-### Low
-#### SOLIDITY_PRAGMAS_VERSION
-(See [Bot report: [N‑12] Non-library/interface files should use fixed compiler versions, not floating ones](https://gist.github.com/itsmetechjay/2efc963de59bcad62e69de48171d10ca#n12-non-libraryinterface-files-should-use-fixed-compiler-versions-not-floating-ones))
-reported as not critical in bot report
-in JBXBuybackDelegate.sol
-
-### Other finds
-Other finds are valid, but we consider them as not-critical
-
+| Unique finds and averages | 160  |         2547          |          43           |               | 0 (0 IAB) |   0    |  0  |      0      |
 
 # BOT REPORT
 
@@ -101,44 +58,7 @@ Vulnerability found: Y means
 | M-02 | JBXBuybackDelegate.sol |             N             |
 | M-03 | JBXBuybackDelegate.sol |             N             |
 
-## COMPARISON BETWEEN SLITHER REPORT AND WARDEN REPORT
-
-### MEDIUM
-| REF  |        contract        | vulnerability found (Y/N) |
-|:----:|:----------------------:|:-------------------------:|
-| M-01 | JBXBuybackDelegate.sol |             N             |
-| M-02 | JBXBuybackDelegate.sol |             N             |
-| M-03 | JBXBuybackDelegate.sol |             N             |
-
-
-## COMPARISON BETWEEN SMARTCHECK REPORT AND WARDEN REPORT
-
-### MEDIUM
-| REF  |        contract        | vulnerability found (Y/N) |
-|:----:|:----------------------:|:-------------------------:|
-| M-01 | JBXBuybackDelegate.sol |             N             |
-| M-02 | JBXBuybackDelegate.sol |             N             |
-| M-03 | JBXBuybackDelegate.sol |             N             |
-
 ## COMPARISON BETWEEN MYTHRIL REPORT AND BOT REPORT
-
-### MEDIUM
-| REF  |        contract        | vulnerability found (Y/N) |
-|:----:|:----------------------:|:-------------------------:|
-| M-01 | JBXBuybackDelegate.sol |             N             |
-| M-02 | JBXBuybackDelegate.sol |             N             |
-| M-03 | JBXBuybackDelegate.sol |             N             |
-
-## COMPARISON BETWEEN SLITHER REPORT AND BOT REPORT
-
-### MEDIUM
-| REF  |        contract        | vulnerability found (Y/N) |
-|:----:|:----------------------:|:-------------------------:|
-| M-01 | JBXBuybackDelegate.sol |             N             |
-| M-02 | JBXBuybackDelegate.sol |             N             |
-| M-03 | JBXBuybackDelegate.sol |             Y             |
-
-## COMPARISON BETWEEN SMARTCHECK REPORT AND BOT REPORT
 
 ### MEDIUM
 | REF  |        contract        | vulnerability found (Y/N) |

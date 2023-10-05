@@ -39,48 +39,6 @@
 | experiment 6              | 1572 |         71342         |         1189          |               | 13 (13 IAB) |   2    | 14  |      0      |
 | Unique finds and averages | 1572 |         61465         |         1026          |               | 13 (13 IAB) |   2    | 14  |      0      |
 
-# SLITHER REPORT
-
-|                                       | SLOC | analysis duration (s) | High | Medium | Low | valid finds |
-|:-------------------------------------:|:----:|:---------------------:|:----:|:------:|:---:|:-----------:|
-|     LlamaAbsolutePeerReview.json      |  42  |         10.44         |  5   |   17   | 25  |      0      |
-|       LlamaAbsoluteQuorum.json        |  38  |         10.39         |  5   |   17   | 25  |      0      |
-|           LlamaAccount.json           | 187  |         10.39         |  6   |   18   | 32  |      0      |
-|            LlamaCore.json             | 448  |         9.12          |  5   |   16   | 23  |      0      |
-|          LlamaExecutor.json           |  15  |         1.74          |  1   |   0    |  1  |      0      |
-|           LlamaFactory.json           | 157  |         9.11          |  5   |   16   | 23  |      0      |
-|      LlamaGovernanceScript.json       | 161  |         9.81          |  5   |   16   | 29  |      0      |
-|           LlamaPolicy.json            | 260  |         9.18          |  5   |   16   | 23  |      0      |
-|       LlamaPolicyMetadata.json        |  75  |         4.44          |  4   |   3    |  0  |      0      |
-| LlamaPolicyMetadataParamRegistry.json |  38  |         1.83          |  1   |   0    |  1  |      0      |
-|       LlamaRelativeQuorum.json        | 151  |         10.19         |  5   |   17   | 25  |      0      |
-|                OVERALL                | 1572 |         86.64         |  47  |  136   | 207 |      0      |
-|          UNIQUE VALID FINDS           |      |                       |      |        |     |      0      |
-
-
-## Valid finds
-Many finds are valid, but we consider all of them as not-critical
-
-# SMARTCHECK REPORT
-|                                  | SLOC | High | Medium | Low  | valid finds |
-|:--------------------------------:|:----:|:----:|:------:|:----:|:-----------:|
-|     LlamaAbsolutePeerReview      |  42  |  1   |   3    | 279  |      0      |
-|       LlamaAbsoluteQuorum        |  38  |  1   |   3    | 277  |      0      |
-|           LlamaAccount           | 187  |  4   |   1    | 277  |      0      |
-|            LlamaCore             | 448  |  1   |   1    | 235  |      0      |
-|          LlamaExecutor           |  15  |  1   |   0    |  4   |      0      |
-|           LlamaFactory           | 157  |  1   |   1    | 235  |      0      |
-|      LlamaGovernanceScript       | 161  |  2   |   2    | 253  |      0      |
-|           LlamaPolicy            | 260  |  1   |   1    | 235  |      0      |
-|       LlamaPolicyMetadata        |  75  |  0   |   1    |  98  |      0      |
-| LlamaPolicyMetadataParamRegistry |  38  |  1   |   0    |  8   |      0      |
-|       LlamaRelativeQuorum        | 151  |  1   |   3    | 273  |      0      |
-|             OVERALL              | 1572 |  14  |   16   | 2174 |      0      |
-|        UNIQUE VALID FINDS        |      |      |        |      |      0      |
-
-## Valid finds
-Many finds are valid, but we consider all of them as not-critical
-
 # BOT REPORT
 
 ## HIGH
@@ -113,36 +71,6 @@ No high in bot report
 | M-02 |          LlamaCore.sol          |             N             |
 | M-03 |  LlamaPolicy.sol,LlamaCore.sol  |             N             |
 
-## COMPARISON BETWEEN SLITHER REPORT AND WARDEN REPORT
-
-## HIGH
-| REF  |        contract         | vulnerability found (Y/N) |
-|:----:|:-----------------------:|:-------------------------:|
-| H-01 | LlamaRelativeQuorum.sol |             N             |
-| H-02 | LlamaRelativeQuorum.sol |             N             |
-
-## MEDIUM
-| REF  |            contract             | vulnerability found (Y/N) |
-|:----:|:-------------------------------:|:-------------------------:|
-| M-01 | LlamaCore.sol,LlamaExecutor.sol |             N             |
-| M-02 |          LlamaCore.sol          |             N             |
-| M-03 |  LlamaPolicy.sol,LlamaCore.sol  |             N             |
-
-## COMPARISON BETWEEN SMARTCHECK REPORT AND WARDEN REPORT
-
-## HIGH
-| REF  |        contract         | vulnerability found (Y/N) |
-|:----:|:-----------------------:|:-------------------------:|
-| H-01 | LlamaRelativeQuorum.sol |             N             |
-| H-02 | LlamaRelativeQuorum.sol |             N             |
-
-## MEDIUM
-| REF  |            contract             | vulnerability found (Y/N) |
-|:----:|:-------------------------------:|:-------------------------:|
-| M-01 | LlamaCore.sol,LlamaExecutor.sol |             N             |
-| M-02 |          LlamaCore.sol          |             N             |
-| M-03 |  LlamaPolicy.sol,LlamaCore.sol  |             N             |
-
 
 
 ## COMPARISON BETWEEN MYTHRIL REPORT AND BOT REPORT
@@ -153,21 +81,6 @@ No high in bot report
 | M-01 | LlamaAccount.sol |             N             |
 | M-02 | LlamaPolicy.sol  |             N             |
 
-## COMPARISON BETWEEN SLITHER REPORT AND BOT REPORT
-
-### MEDIUM
-| REF  |     contract     | vulnerability found (Y/N) |
-|:----:|:----------------:|:-------------------------:|
-| M-01 | LlamaAccount.sol |             N             |
-| M-02 | LlamaPolicy.sol  |             N             |
-
-## COMPARISON BETWEEN SMARTCHECK REPORT AND BOT REPORT
-
-### MEDIUM
-| REF  |     contract     | vulnerability found (Y/N) |
-|:----:|:----------------:|:-------------------------:|
-| M-01 | LlamaAccount.sol |             N             |
-| M-02 | LlamaPolicy.sol  |             N             |
 
 
 
